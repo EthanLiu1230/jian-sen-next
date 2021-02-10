@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Header } from "../components/Header";
+import { Header, Link, SubLink, SubNav } from "../components/Header";
 import { Filter } from "../components/Filter";
 
 export default function Dev() {
@@ -10,6 +10,13 @@ export default function Dev() {
       <div className="pt-14">
         <Filter />
       </div>
+      <Link>Link</Link>
+      <div className="flex">
+        <SubLink>abc</SubLink>
+
+        <SubLink selected>bcdd</SubLink>
+      </div>
+      <SubNav />
     </>
   );
 }

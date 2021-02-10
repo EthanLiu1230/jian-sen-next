@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Logo } from "./atomic/Logo";
 import { MenuToggle } from "./atomic/buttons/MenuToggle";
 import { Separator } from "./atomic/Separator";
@@ -7,12 +7,11 @@ import { animated } from "react-spring";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useRef } from "react";
 import { Box } from "./atomic/Box";
+import cn from "classnames";
 
 const leftLinks = ["Office", "School", "Hotel"];
 const rightLinks = ["Home", "Cases", "Contact Us"];
 const subLinks = ["Desk", "Cabinet", "Chair", "Sofa"];
-
-function SubNav() {}
 
 export function Header() {
   const [opened, setOpened] = useState(false);
@@ -97,5 +96,67 @@ export function Header() {
           )
       )}
     </header>
+  );
+}
+
+export function SubNav() {
+  return (
+    <div className="flex py-3 px-4 w-full shadow-spread">
+      {subLinks.map((sl) => (
+        <a href="" className="mr-8">
+          <SubLink selected={sl === "Desk"}>{sl}</SubLink>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function Link({
+  children,
+  bold,
+}: {
+  children: ReactNode;
+  bold?: boolean;
+}) {
+  return (
+    <p
+      className={cn("text-sm", {
+        "font-bold": bold,
+      })}
+    >
+      {children}
+    </p>
+  );
+}
+
+export function SubLink({
+  children,
+  selected = false,
+}: {
+  children: ReactNode;
+  selected?: boolean;
+}) {
+  return (
+    <span className="flex flex-col justify-between items-center w-auto h-7">
+      <p
+        className={cn("text-sm", {
+          " font-bold text-black": selected,
+          "text-warmGray-600": !selected,
+        })}
+      >
+        {children}
+      </p>
+      {selected && (
+        <svg
+          width="5"
+          height="4"
+          viewBox="0 0 5 4"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="2.5" cy="2" r="2" fill="black" />
+        </svg>
+      )}
+    </span>
   );
 }

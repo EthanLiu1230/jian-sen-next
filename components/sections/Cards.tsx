@@ -32,7 +32,7 @@ export function Cards({
   cards?: CardProps[];
 }) {
   return (
-    <div className="container overflow-x-scroll whitespace-nowrap no-scrollbar px-4">
+    <div className="container overflow-x-scroll px-4 whitespace-nowrap no-scrollbar">
       {cards.map((c, i) => (
         <Card key={i} {...c} />
       ))}
