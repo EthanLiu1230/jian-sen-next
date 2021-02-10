@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+
+/* Write your own custom base styles here */
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/*!* Write your own custom component styles here *!*/
+
+/* require a .relative.pb-(h/w) container */
+.img-ratio {
+    @apply absolute h-full w-full object-cover
+}
+
+/* Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.p-box {
+    @apply py-2.5 px-4
+}
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
+@layer base {
+
+    h1 {
+        /* 30, 36, 48 */
+        @apply font-extrabold text-3xl md:text-4xl lg:text-5xl
+    }
+
+    h2 {
+        /* */
+        @apply font-bold text-2xl md:text-3xl lg:text-4xl
+    }
+
+    h3 {
+        @apply font-semibold text-xl md:text-2xl lg:text-3xl
+    }
+
+    p {
+        @apply text-xs md:text-xs lg:text-base
+    }
+
+    small {
+        @apply font-semibold text-xs md:text-sm
+    }
+
+    a {
+        @apply text-sm md:text-base lg:text-lg
+    }
+}
