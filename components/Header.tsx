@@ -12,6 +12,8 @@ const leftLinks = ["Office", "School", "Hotel"];
 const rightLinks = ["Home", "Cases", "Contact Us"];
 const subLinks = ["Desk", "Cabinet", "Chair", "Sofa"];
 
+function SubNav() {}
+
 export function Header() {
   const [opened, setOpened] = useState(false);
 
@@ -68,7 +70,7 @@ export function Header() {
                     <div className="mr-3 mb-3 cursor-pointer">
                       <button>
                         <Box variant={l === "Office" ? "filled" : "fill"}>
-                          <label className="text-sm">{l}</label>
+                          <p className="text-sm p-box">{l}</p>
                         </Box>
                       </button>
                     </div>
