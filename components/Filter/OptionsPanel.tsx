@@ -46,7 +46,7 @@ export function OptionsPanel({
               onClick={() => updateItem({ option, selected: !selected })}
             >
               <Box variant={selected ? "outlined" : "outline"}>
-                <p className="p-box">{capitalize(option)}</p>
+                <p className="text-xs p-box">{capitalize(option)}</p>
               </Box>
             </button>
           ))}

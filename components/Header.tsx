@@ -25,6 +25,8 @@ export function Header() {
   const outsideClickRef = useRef(null);
   useOutsideClick(outsideClickRef, () => setOpened(!opened));
 
+  function showSubNav() {}
+
   return (
     <header className="fixed z-50 w-full bg-white bg-opacity-95">
       <div className="grid grid-cols-3 items-center px-4 w-full h-14 md:container">
@@ -32,8 +34,13 @@ export function Header() {
         <div className="justify-self-start">
           <nav className="hidden md:flex">
             {leftLinks.map((link) => (
-              <a key={link} href="" className="mr-8 text-sm">
-                {link}
+              <a
+                key={link}
+                href=""
+                className="mr-8"
+                onMouseOver={() => showSubNav()}
+              >
+                <Link bold={link === "Office"}>{link}</Link>
               </a>
             ))}
           </nav>
@@ -48,8 +55,8 @@ export function Header() {
         {/* right link group */}
         <nav className="hidden justify-self-end md:flex">
           {rightLinks.map((link) => (
-            <a href="" className="ml-8 text-sm">
-              {link}
+            <a href="" className="ml-9">
+              <Link>{link}</Link>
             </a>
           ))}
         </nav>
@@ -101,13 +108,13 @@ export function Header() {
 
 export function SubNav() {
   return (
-    <div className="flex py-3 px-4 w-full shadow-spread">
+    <nav className="flex py-3 px-4 w-full shadow-spread">
       {subLinks.map((sl) => (
-        <a href="" className="mr-8">
+        <a href="" className="mr-9">
           <SubLink selected={sl === "Desk"}>{sl}</SubLink>
         </a>
       ))}
-    </div>
+    </nav>
   );
 }
 
