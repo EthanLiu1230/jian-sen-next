@@ -14,18 +14,73 @@ const rightLinks = ["Home", "Cases", "Contact Us"];
 const subLinks = ["Desk", "Cabinet", "Chair", "Sofa"];
 
 export function Header() {
-  const [opened, setOpened] = useState(false);
+  function Mobile() {
+    const [opened, setOpened] = useState(false);
 
-  const transitions = useTransition(opened, null, {
-    from: { transform: "translate3d(-100%,0,0)" },
-    enter: { transform: "translate3d(0,0,0)" },
-    leave: { transform: "translate3d(-100%,0,0)" },
-  });
+    const transitions = useTransition(opened, null, {
+      from: { transform: "translate3d(-100%,0,0)" },
+      enter: { transform: "translate3d(0,0,0)" },
+      leave: { transform: "translate3d(-100%,0,0)" },
+    });
+    const outsideClickRef = useRef(null);
+    useOutsideClick(outsideClickRef, () => setOpened(!opened));
 
-  const outsideClickRef = useRef(null);
-  useOutsideClick(outsideClickRef, () => setOpened(!opened));
-
-  function showSubNav() {}
+    return (
+      <>
+        <div className="flex items-end py-3 px-4">
+          <div className="justify-self-start">
+            <MenuToggle opened={opened} onClick={() => setOpened(!opened)} />
+          </div>
+          <div className="justify-self-center">
+            <Logo />
+          </div>
+        </div>
+        {transitions.map(
+          ({ item, key, props }) =>
+            item && (
+              <div className="absolute z-20 w-screen h-screen bg-black bg-opacity-20 md:hidden">
+                <animated.div
+                  ref={outsideClickRef}
+                  style={{ transform: props.transform, opacity: 1 }}
+                  className="overflow-scroll px-4 w-3/4 h-full bg-white no-scrollbar"
+                >
+                  <div className="flex flex-wrap py-10">
+                    {leftLinks.map((l) => (
+                      <div className="mr-3 mb-3 cursor-pointer">
+                        <button>
+                          <Box variant={l === "Office" ? "filled" : "fill"}>
+                            <p className="text-sm p-box">{l}</p>
+                          </Box>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <Separator />
+                  <div className="py-10">
+                    {subLinks.map((l) => (
+                      <a className="block mb-6 text-sm" href="">
+                        {l}
+                      </a>
+                    ))}
+                  </div>
+                  <Separator />
+                  <div className="py-10">
+                    {rightLinks.map((l) => (
+                      <a
+                        className="block mb-6 text-sm text-warmGray-600"
+                        href=""
+                      >
+                        {l}
+                      </a>
+                    ))}
+                  </div>
+                </animated.div>
+              </div>
+            )
+        )}
+      </>
+    );
+  }
 
   return (
     <header className="fixed z-50 w-full bg-white bg-opacity-95">
@@ -38,7 +93,7 @@ export function Header() {
                 key={link}
                 href=""
                 className="mr-8"
-                onMouseOver={() => showSubNav()}
+                onMouseOver={() => console.log(`mouse over ${link}`)}
               >
                 <Link bold={link === "Office"}>{link}</Link>
               </a>
@@ -61,47 +116,6 @@ export function Header() {
           ))}
         </nav>
       </div>
-      {/* side bar panel */}
-      {transitions.map(
-        ({ item, key, props }) =>
-          item && (
-            <div className="absolute z-20 w-screen h-screen bg-black bg-opacity-20 md:hidden">
-              <animated.div
-                ref={outsideClickRef}
-                style={{ transform: props.transform, opacity: 1 }}
-                className="overflow-scroll px-4 w-3/4 h-full bg-white no-scrollbar"
-              >
-                <div className="flex flex-wrap py-10">
-                  {leftLinks.map((l) => (
-                    <div className="mr-3 mb-3 cursor-pointer">
-                      <button>
-                        <Box variant={l === "Office" ? "filled" : "fill"}>
-                          <p className="text-sm p-box">{l}</p>
-                        </Box>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <Separator />
-                <div className="py-10">
-                  {subLinks.map((l) => (
-                    <a className="block mb-6 text-sm" href="">
-                      {l}
-                    </a>
-                  ))}
-                </div>
-                <Separator />
-                <div className="py-10">
-                  {rightLinks.map((l) => (
-                    <a className="block mb-6 text-sm text-warmGray-600" href="">
-                      {l}
-                    </a>
-                  ))}
-                </div>
-              </animated.div>
-            </div>
-          )
-      )}
     </header>
   );
 }
