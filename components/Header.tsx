@@ -9,11 +9,58 @@ import { useRef } from "react";
 import { Box } from "./atomic/Box";
 import cn from "classnames";
 
-const leftLinks = ["Office", "School", "Hotel"];
 const rightLinks = ["Home", "Cases", "Contact Us"];
 const subLinks = ["Desk", "Cabinet", "Chair", "Sofa"];
 
-export function Header() {
+interface Link {
+  name: string;
+  href: string;
+}
+
+interface LinkGroup {
+  name: string;
+  group: Link[];
+}
+
+export function Header({
+  linkGroups = [
+    {
+      name: "Office",
+      group: [
+        { name: "Desk", href: "" },
+        { name: "Chair", href: "" },
+        { name: "Sofa", href: "" },
+        { name: "Office", href: "" },
+      ],
+    },
+    {
+      name: "Hotel",
+      group: [
+        { name: "Desk", href: "" },
+        { name: "Chair", href: "" },
+        { name: "Sofa", href: "" },
+        { name: "Hotel", href: "" },
+      ],
+    },
+    {
+      name: "School",
+      group: [
+        { name: "Desk", href: "" },
+        { name: "Chair", href: "" },
+        { name: "Sofa", href: "" },
+        { name: "School", href: "" },
+      ],
+    },
+  ],
+  links = [
+    { name: "Home", href: "" },
+    { name: "Cases", href: "" },
+    { name: "Contact Us", href: "" },
+  ],
+}: {
+  linkGroups: LinkGroup[];
+  links: Link[];
+}) {
   function Mobile() {
     const [opened, setOpened] = useState(false);
 
@@ -45,11 +92,15 @@ export function Header() {
                   className="overflow-scroll px-4 w-3/4 h-full bg-white no-scrollbar"
                 >
                   <div className="flex flex-wrap py-10">
-                    {leftLinks.map((l) => (
+                    {linkGroups.map((linkGroup) => (
                       <div className="mr-3 mb-3 cursor-pointer">
                         <button>
-                          <Box variant={l === "Office" ? "filled" : "fill"}>
-                            <p className="text-sm p-box">{l}</p>
+                          <Box
+                            variant={
+                              linkGroup.name === "Office" ? "filled" : "fill"
+                            }
+                          >
+                            <p className="text-sm p-box">{linkGroup.name}</p>
                           </Box>
                         </button>
                       </div>
@@ -83,33 +134,56 @@ export function Header() {
   }
 
   function Desktop() {
+    const [showSubNav, setShowSubNav] = useState<boolean>(false);
+    const [linkGroup, setLinkGroup] = useState<LinkGroup>(null);
+
     return (
-      <div className="container flex justify-between items-center py-4 px-4 w-full">
-        <nav className="flex space-x-10">
-          {leftLinks.map((link) => (
+      <>
+        <div className="container flex justify-between items-center py-4 px-3 w-full">
+          <nav className="flex space-x-10">
+            {linkGroups.map((lg, index) => (
+              <div
+                key={index}
+                onMouseEnter={() => {
+                  setLinkGroup(lg);
+                  setShowSubNav(true);
+                }}
+                onMouseLeave={() => setShowSubNav(false)}
+              >
+                <Link>{lg.name}</Link>
+              </div>
+            ))}
+          </nav>
+          <nav>
             <a href="">
-              <Link>{link}</Link>
+              <Logo />
             </a>
-          ))}
-        </nav>
-        <nav>
-          <a href="">
-            <Logo />
-          </a>
-        </nav>
-        <nav className="flex space-x-10">
-          {rightLinks.map((link) => (
-            <a href="">
-              <Link>{link}</Link>
-            </a>
-          ))}
-        </nav>
-      </div>
+          </nav>
+          <nav className="flex space-x-10">
+            {rightLinks.map((link) => (
+              <a href="">
+                <Link>{link}</Link>
+              </a>
+            ))}
+          </nav>
+        </div>
+        {showSubNav && (
+          <div className="container px-4">
+            <SubNav>
+              {linkGroup.group.map((link) => (
+                <a href={link.href}>
+                  <SubLink selected={link.name === "Desk"}>{link.name}</SubLink>
+                </a>
+              ))}
+            </SubNav>
+          </div>
+        )}
+      </>
     );
   }
 
   return (
-    <header className="fixed z-50 w-full bg-white bg-opacity-95">
+    <header className="fixed z-50 w-full bg-white">
       <div className="md:hidden">
         <Mobile />
       </div>
@@ -120,16 +194,8 @@ export function Header() {
   );
 }
 
-export function SubNav() {
-  return (
-    <nav className="flex py-3 px-4 w-full shadow-spread">
-      {subLinks.map((sl) => (
-        <a href="" className="mr-9">
-          <SubLink selected={sl === "Desk"}>{sl}</SubLink>
-        </a>
-      ))}
-    </nav>
-  );
+export function SubNav({ children }: { children: ReactNode }) {
+  return <nav className="flex pb-3 space-x-10 w-full">{children}</nav>;
 }
 
 export function Link({
