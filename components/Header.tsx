@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Logo } from "./atomic/Logo";
 import { MenuToggle } from "./atomic/buttons/MenuToggle";
 import { Separator } from "./atomic/Separator";
@@ -63,7 +63,12 @@ export function Header({
 }) {
   function Mobile() {
     const [opened, setOpened] = useState<boolean>(false);
-    const [group, setGroup] = useState<LinkGroup>(linkGroups[0]);
+    const [linkGroup, setLinkGroup] = useState<LinkGroup>(linkGroups[0]);
+    const [showMobileSubNav, setShowMobileSubNav] = useState<boolean>(true);
+
+    useEffect(() => {
+      setShowMobileSubNav(!opened);
+    }, [opened]);
 
     const transitions = useTransition(opened, null, {
       from: { transform: "translate3d(-100%,0,0)" },
@@ -72,6 +77,22 @@ export function Header({
     });
     const outsideClickRef = useRef(null);
     useOutsideClick(outsideClickRef, () => setOpened(!opened));
+
+    function MobileSubNav() {
+      return (
+        <div className="flex flex-nowrap">
+          <p className="text-sm font-bold text-black">{linkGroup.name}</p>
+          <p className="px-4 text-md font-bold text-warmGray-600">/</p>
+          <SubNav>
+            {linkGroup.group.map((link) => (
+              <a href={link.href}>
+                <SubLink selected={link.name === "Desk"}>{link.name}</SubLink>
+              </a>
+            ))}
+          </SubNav>
+        </div>
+      );
+    }
 
     return (
       <>
@@ -83,6 +104,11 @@ export function Header({
             <Logo />
           </div>
         </div>
+        {showMobileSubNav && (
+          <div className="px-4 py-3">
+            <MobileSubNav />
+          </div>
+        )}
         {transitions.map(
           ({ item, props }) =>
             item && (
@@ -95,8 +121,8 @@ export function Header({
                   <div className="flex flex-wrap py-10">
                     {linkGroups.map((lg) => (
                       <div key={lg.name} className="mr-3 mb-3 cursor-pointer">
-                        <button onClick={() => setGroup(lg)}>
-                          <Box variant={lg === group ? "filled" : "fill"}>
+                        <button onClick={() => setLinkGroup(lg)}>
+                          <Box variant={lg === linkGroup ? "filled" : "fill"}>
                             <p className="text-sm p-box">{lg.name}</p>
                           </Box>
                         </button>
@@ -105,7 +131,7 @@ export function Header({
                   </div>
                   <Separator />
                   <div className="py-10">
-                    {group.group.map((l) => (
+                    {linkGroup.group.map((l) => (
                       <a className="block mb-6 text-xs" href={l.href}>
                         {l.name}
                       </a>
