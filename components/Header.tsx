@@ -27,7 +27,7 @@ export function Header() {
 
     return (
       <>
-        <div className="flex items-end py-3 px-4">
+        <div className="grid grid-cols-3 items-center py-3 px-4">
           <div className="justify-self-start">
             <MenuToggle opened={opened} onClick={() => setOpened(!opened)} />
           </div>
@@ -58,7 +58,7 @@ export function Header() {
                   <Separator />
                   <div className="py-10">
                     {subLinks.map((l) => (
-                      <a className="block mb-6 text-sm" href="">
+                      <a className="block mb-6 text-xs" href="">
                         {l}
                       </a>
                     ))}
@@ -67,7 +67,7 @@ export function Header() {
                   <div className="py-10">
                     {rightLinks.map((l) => (
                       <a
-                        className="block mb-6 text-sm text-warmGray-600"
+                        className="block mb-6 text-xs text-warmGray-600"
                         href=""
                       >
                         {l}
@@ -82,39 +82,39 @@ export function Header() {
     );
   }
 
-  return (
-    <header className="fixed z-50 w-full bg-white bg-opacity-95">
-      <div className="grid grid-cols-3 items-center px-4 w-full h-14 md:container">
-        {/* left link group */}
-        <div className="justify-self-start">
-          <nav className="hidden md:flex">
-            {leftLinks.map((link) => (
-              <a
-                key={link}
-                href=""
-                className="mr-8"
-                onMouseOver={() => console.log(`mouse over ${link}`)}
-              >
-                <Link bold={link === "Office"}>{link}</Link>
-              </a>
-            ))}
-          </nav>
-          <div className="md:hidden">
-            <MenuToggle opened={opened} onClick={() => setOpened(!opened)} />
-          </div>
-        </div>
-        {/* Logo link */}
-        <div className="col-start-2 justify-self-center">
-          <Logo />
-        </div>
-        {/* right link group */}
-        <nav className="hidden justify-self-end md:flex">
-          {rightLinks.map((link) => (
-            <a href="" className="ml-9">
+  function Desktop() {
+    return (
+      <div className="container flex justify-between items-center py-4 px-4 w-full">
+        <nav className="flex space-x-10">
+          {leftLinks.map((link) => (
+            <a href="">
               <Link>{link}</Link>
             </a>
           ))}
         </nav>
+        <nav>
+          <a href="">
+            <Logo />
+          </a>
+        </nav>
+        <nav className="flex space-x-10">
+          {rightLinks.map((link) => (
+            <a href="">
+              <Link>{link}</Link>
+            </a>
+          ))}
+        </nav>
+      </div>
+    );
+  }
+
+  return (
+    <header className="fixed z-50 w-full bg-white bg-opacity-95">
+      <div className="md:hidden">
+        <Mobile />
+      </div>
+      <div className="hidden md:block">
+        <Desktop />
       </div>
     </header>
   );
