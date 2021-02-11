@@ -22,47 +22,51 @@ interface LinkGroup {
   group: Link[];
 }
 
+const LINK_GROUPS: LinkGroup[] = [
+  {
+    name: "Office",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "Office", href: "" },
+    ],
+  },
+  {
+    name: "Hotel",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "Hotel", href: "" },
+    ],
+  },
+  {
+    name: "School",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "School", href: "" },
+    ],
+  },
+];
+const LINKS: Link[] = [
+  { name: "Home", href: "" },
+  { name: "Cases", href: "" },
+  { name: "Contact Us", href: "" },
+];
+
 export function Header({
-  linkGroups = [
-    {
-      name: "Office",
-      group: [
-        { name: "Desk", href: "" },
-        { name: "Chair", href: "" },
-        { name: "Sofa", href: "" },
-        { name: "Office", href: "" },
-      ],
-    },
-    {
-      name: "Hotel",
-      group: [
-        { name: "Desk", href: "" },
-        { name: "Chair", href: "" },
-        { name: "Sofa", href: "" },
-        { name: "Hotel", href: "" },
-      ],
-    },
-    {
-      name: "School",
-      group: [
-        { name: "Desk", href: "" },
-        { name: "Chair", href: "" },
-        { name: "Sofa", href: "" },
-        { name: "School", href: "" },
-      ],
-    },
-  ],
-  links = [
-    { name: "Home", href: "" },
-    { name: "Cases", href: "" },
-    { name: "Contact Us", href: "" },
-  ],
+  linkGroups = LINK_GROUPS,
+  links = LINKS,
 }: {
   linkGroups: LinkGroup[];
   links: Link[];
 }) {
   function Mobile() {
-    const [opened, setOpened] = useState(false);
+    const [opened, setOpened] = useState<boolean>(false);
+    const [group, setGroup] = useState<LinkGroup>(null);
 
     const transitions = useTransition(opened, null, {
       from: { transform: "translate3d(-100%,0,0)" },
@@ -92,15 +96,11 @@ export function Header({
                   className="overflow-scroll px-4 w-3/4 h-full bg-white no-scrollbar"
                 >
                   <div className="flex flex-wrap py-10">
-                    {linkGroups.map((linkGroup) => (
+                    {linkGroups.map((lg) => (
                       <div className="mr-3 mb-3 cursor-pointer">
                         <button>
-                          <Box
-                            variant={
-                              linkGroup.name === "Office" ? "filled" : "fill"
-                            }
-                          >
-                            <p className="text-sm p-box">{linkGroup.name}</p>
+                          <Box variant={lg === group ? "filled" : "fill"}>
+                            <p className="text-sm p-box">{lg.name}</p>
                           </Box>
                         </button>
                       </div>
@@ -135,7 +135,7 @@ export function Header({
 
   function Desktop() {
     const [showSubNav, setShowSubNav] = useState<boolean>(false);
-    const [linkGroup, setLinkGroup] = useState<LinkGroup>(null);
+    const [group, setGroup] = useState<LinkGroup>(null);
 
     return (
       <>
@@ -145,7 +145,7 @@ export function Header({
               <div
                 key={index}
                 onMouseEnter={() => {
-                  setLinkGroup(lg);
+                  setGroup(lg);
                   setShowSubNav(true);
                 }}
                 onMouseLeave={() => setShowSubNav(false)}
@@ -170,7 +170,7 @@ export function Header({
         {showSubNav && (
           <div className="container px-4">
             <SubNav>
-              {linkGroup.group.map((link) => (
+              {group.group.map((link) => (
                 <a href={link.href}>
                   <SubLink selected={link.name === "Desk"}>{link.name}</SubLink>
                 </a>
