@@ -9,9 +9,6 @@ import { useRef } from "react";
 import { Box } from "./atomic/Box";
 import cn from "classnames";
 
-const rightLinks = ["Home", "Cases", "Contact Us"];
-const subLinks = ["Desk", "Cabinet", "Chair", "Sofa"];
-
 interface Link {
   name: string;
   href: string;
@@ -87,7 +84,7 @@ export function Header({
           </div>
         </div>
         {transitions.map(
-          ({ item, key, props }) =>
+          ({ item, props }) =>
             item && (
               <div className="absolute z-20 w-screen h-screen bg-black bg-opacity-20 md:hidden">
                 <animated.div
@@ -116,12 +113,12 @@ export function Header({
                   </div>
                   <Separator />
                   <div className="py-10">
-                    {rightLinks.map((l) => (
+                    {links.map((link) => (
                       <a
                         className="block mb-6 text-xs text-warmGray-600"
-                        href=""
+                        href={link.href}
                       >
-                        {l}
+                        {link.name}
                       </a>
                     ))}
                   </div>
@@ -160,9 +157,9 @@ export function Header({
             </a>
           </nav>
           <nav className="flex space-x-10">
-            {rightLinks.map((link) => (
-              <a href="">
-                <Link>{link}</Link>
+            {links.map((link) => (
+              <a href={link.href}>
+                <Link>{link.name}</Link>
               </a>
             ))}
           </nav>
