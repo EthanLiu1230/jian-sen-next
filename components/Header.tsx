@@ -66,7 +66,7 @@ export function Header({
 }) {
   function Mobile() {
     const [opened, setOpened] = useState<boolean>(false);
-    const [group, setGroup] = useState<LinkGroup>(null);
+    const [group, setGroup] = useState<LinkGroup>(linkGroups[0]);
 
     const transitions = useTransition(opened, null, {
       from: { transform: "translate3d(-100%,0,0)" },
@@ -97,8 +97,8 @@ export function Header({
                 >
                   <div className="flex flex-wrap py-10">
                     {linkGroups.map((lg) => (
-                      <div className="mr-3 mb-3 cursor-pointer">
-                        <button>
+                      <div key={lg.name} className="mr-3 mb-3 cursor-pointer">
+                        <button onClick={() => setGroup(lg)}>
                           <Box variant={lg === group ? "filled" : "fill"}>
                             <p className="text-sm p-box">{lg.name}</p>
                           </Box>
@@ -108,9 +108,9 @@ export function Header({
                   </div>
                   <Separator />
                   <div className="py-10">
-                    {subLinks.map((l) => (
-                      <a className="block mb-6 text-xs" href="">
-                        {l}
+                    {group.group.map((l) => (
+                      <a className="block mb-6 text-xs" href={l.href}>
+                        {l.name}
                       </a>
                     ))}
                   </div>
