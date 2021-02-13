@@ -12,7 +12,7 @@
 
 /* require a .relative.pb-(h/w) container */
 .img-ratio {
-    @apply absolute h-full w-full object-cover
+    @apply absolute h-full w-full object-cover inset-0
 }
 
 /* Chrome, Safari and Opera */

@@ -58,8 +58,8 @@ export function Header({
   linkGroups = LINK_GROUPS,
   links = LINKS,
 }: {
-  linkGroups: LinkGroup[];
-  links: Link[];
+  linkGroups?: LinkGroup[];
+  links?: Link[];
 }) {
   function Mobile() {
     const [opened, setOpened] = useState<boolean>(false);
