@@ -2,11 +2,11 @@ import React from "react";
 import cn from "classnames";
 
 export function Box({
-  variant = "default",
+  variant = "filled",
   shadow = false,
   children,
 }: {
-  variant?: "fill" | "filled" | "outline" | "outlined" | "default";
+  variant?: "fill" | "filled" | "outline" | "outlined" | "ghost";
   children: React.ReactNode;
   shadow?: boolean;
 }) {
@@ -17,7 +17,7 @@ export function Box({
         "bg-primary text-white": variant === "filled",
         "border text-warmGray-600 border-warmGray-300": variant === "outline",
         "border text-primary border-primary": variant === "outlined",
-        "bg-white text-warmGray-600": variant === "default",
+        "bg-white text-warmGray-600": variant === "ghost",
         "shadow-spread": shadow,
       })}
     >

@@ -12,7 +12,7 @@
 
 /* require a .relative.pb-(h/w) container */
 .img-ratio {
-    @apply absolute h-full w-full object-cover inset-0
+    @apply absolute h-full w-full inset-0 object-cover
 }
 
 /* Chrome, Safari and Opera */
@@ -36,29 +36,4 @@
 /* Your own custom utilities */
 @layer base {
 
-    h1 {
-        /* 30, 36, 48 */
-        @apply font-extrabold text-3xl md:text-4xl lg:text-5xl
-    }
-
-    h2 {
-        /* */
-        @apply font-bold text-2xl md:text-3xl lg:text-4xl
-    }
-
-    h3 {
-        @apply font-semibold text-xl md:text-2xl lg:text-3xl
-    }
-
-    p {
-        @apply text-xs md:text-xs lg:text-base
-    }
-
-    small {
-        @apply font-semibold text-xs md:text-sm
-    }
-
-    a {
-        @apply text-sm md:text-base lg:text-lg
-    }
 }
