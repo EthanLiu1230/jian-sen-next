@@ -8,9 +8,9 @@ export default function _products() {
   return (
     <>
       <Header />
-      <div className="container flex flex-col gap-6 px-4 pt-28 md:flex-row">
+      <div className="container flex flex-col gap-6 py-4 px-4 pt-28 md:flex-row">
         <div className="md:w-1/3 lg:w-1/4">
-          <h1 className="mb-4 text-xl">Desk</h1>
+          <h1 className="mb-6 text-xl">Desk</h1>
           <div className="flex gap-4 md:flex-col">
             <div className="flex-auto">
               <Filter key={1} />
@@ -20,11 +20,16 @@ export default function _products() {
             </div>
           </div>
         </div>
-
-        <div className="grid flex-auto grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map((c) => (
-            <Card key={c} />
-          ))}
+        <div className="flex-auto py-4">
+          <div className="flex justify-between mb-2 text-warmGray-600">
+            <h2>Desk</h2>
+            <span>19 items</span>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {cards.map((c) => (
+              <Card key={c} />
+            ))}
+          </div>
         </div>
       </div>
     </>
