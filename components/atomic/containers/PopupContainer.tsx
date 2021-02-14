@@ -21,7 +21,7 @@ export function PopUpContainer({
       {opened && (
         <div
           ref={ref}
-          className="flex absolute left-0 bottom-4 z-10 justify-center w-full px-screen sm:block sm:top-14 sm:px-0"
+          className="flex absolute left-0 bottom-4 z-10 justify-center w-full px-4 sm:block sm:top-14 sm:px-0"
         >
           {childrenToOpen}
         </div>

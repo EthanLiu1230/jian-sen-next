@@ -64,7 +64,7 @@ export function Header({
   function Mobile() {
     const [opened, setOpened] = useState<boolean>(false);
     const [linkGroup, setLinkGroup] = useState<LinkGroup>(linkGroups[0]);
-    const [showMobileSubNav, setShowMobileSubNav] = useState<boolean>(true);
+    const [showMobileSubNav, setShowMobileSubNav] = useState<boolean>(false);
 
     useEffect(() => {
       setShowMobileSubNav(!opened);
@@ -96,7 +96,7 @@ export function Header({
 
     return (
       <>
-        <div className="grid grid-cols-3 items-center py-3 px-4">
+        <div className="grid grid-cols-3 items-center py-3 px-4 ">
           <div className="justify-self-start">
             <MenuToggle opened={opened} onClick={() => setOpened(!opened)} />
           </div>

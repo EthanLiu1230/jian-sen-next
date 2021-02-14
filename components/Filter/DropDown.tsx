@@ -53,7 +53,7 @@ export function DropDown({
   return (
     <div
       className={cn(
-        "rounded w-full",
+        "rounded w-full max-w-xs",
         {
           "bg-primary text-white": filled,
           "bg-white text-warmGray-400": !filled,

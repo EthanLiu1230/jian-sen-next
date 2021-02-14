@@ -3,7 +3,7 @@ import { hold_img } from "../pages/dev";
 
 export function Card() {
   return (
-    <div className="flex overflow-hidden max-w-sm rounded-lg shadow sm:flex-col">
+    <div className="flex overflow-hidden max-w-screen-sm rounded-lg shadow sm:flex-col">
       <div className="relative flex-none w-3/5 sm:relative sm:pb-3/5 sm:w-full sm:flex-1">
         <img src={hold_img} alt="" className="img-ratio" />
       </div>

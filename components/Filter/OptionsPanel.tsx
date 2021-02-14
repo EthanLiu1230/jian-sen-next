@@ -29,7 +29,7 @@ export function OptionsPanel({
   }
 
   return (
-    <div className="px-4 w-full rounded shadow-spread sm:w-96">
+    <div className="px-4 w-full bg-white rounded shadow-spread sm:w-96">
       <div className="flex justify-between items-end py-4 w-full">
         <p className="text-sm text-warmGray-500">{label}</p>
         <p className="text-xs text-warmGray-500">
