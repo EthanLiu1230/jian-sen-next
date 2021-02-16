@@ -15,8 +15,8 @@ export function SquareImage({ ring = false }: { ring?: boolean }) {
 }
 export function ProductCarousel({ images }: { images?: string[] }) {
   return (
-    <>
-      <div className="overflow-hidden relative max-w-screen-sm h-96 rounded-xl">
+    <div className="max-w-screen-sm">
+      <div className="overflow-hidden relative h-96 rounded-xl">
         <img src={hold_img} alt="" className="img-ratio" />
       </div>
       <div className="flex flex-wrap gap-4 py-4">
@@ -24,6 +24,6 @@ export function ProductCarousel({ images }: { images?: string[] }) {
         <SquareImage ring />
         <SquareImage />
       </div>
-    </>
+    </div>
   );
 }
