@@ -30,7 +30,7 @@ function ProductLink({
   );
 }
 
-export function Products({
+export function ProductCategory({
   products = defaultProducts,
 }: {
   products?: Product[];
