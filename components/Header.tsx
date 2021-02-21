@@ -30,9 +30,9 @@ export function Header({
     const [linkGroup, setLinkGroup] = useState<LinkGroup>(linkGroups[0]);
     const [showMobileSubNav, setShowMobileSubNav] = useState<boolean>(false);
 
-    useEffect(() => {
-      setShowMobileSubNav(!opened);
-    }, [opened]);
+    // useEffect(() => {
+    //   setShowMobileSubNav(!opened);
+    // }, [opened]);
 
     const transitions = useTransition(opened, null, {
       from: { transform: "translate3d(-100%,0,0)" },

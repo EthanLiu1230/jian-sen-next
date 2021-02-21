@@ -4,30 +4,24 @@ import {
   CarouselIndicatorGroup,
 } from "../atomic/CarouselIndicator";
 import { CarouselButton } from "../atomic/buttons/CarouselButton";
-import { defaultCases } from "../data/default-data";
 import { circulateIndex } from "../data/utils";
+import { CASES } from "../../DUMMY";
 
-interface CaseProps {
-  image: string;
-  title: string;
-  text: string;
-}
-
-interface Props {
-  cases?: CaseProps[];
-}
-
-const defaultProps: Props = {
-  cases: defaultCases,
-};
-
-export function Cases(props: Props) {
+export function Cases({
+  cases = CASES,
+}: {
+  cases?: {
+    image: string;
+    title: string;
+    text: string;
+  }[];
+}) {
   const [cur, setCur] = useState(0);
 
-  const ci = circulateIndex(props.cases.length);
-  const at = (i) => props.cases[ci(i)];
+  const ci = circulateIndex(cases.length);
+  const at = (i) => cases[ci(i)];
 
-  const renderIndicators = props.cases.map((_, i) => (
+  const renderIndicators = cases.map((_, i) => (
     <button onClick={() => setCur(i)} key={i} className="mr-2 lg:mr-4">
       <CarouselIndicator active={i === cur} />
     </button>
@@ -91,5 +85,3 @@ export function Cases(props: Props) {
     </div>
   );
 }
-
-Cases.defaultProps = defaultProps;
