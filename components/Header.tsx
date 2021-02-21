@@ -19,41 +19,6 @@ interface LinkGroup {
   group: Link[];
 }
 
-const LINK_GROUPS: LinkGroup[] = [
-  {
-    name: "Office",
-    group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "Office", href: "" },
-    ],
-  },
-  {
-    name: "Hotel",
-    group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "Hotel", href: "" },
-    ],
-  },
-  {
-    name: "School",
-    group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "School", href: "" },
-    ],
-  },
-];
-const LINKS: Link[] = [
-  { name: "Home", href: "" },
-  { name: "Cases", href: "" },
-  { name: "Contact Us", href: "" },
-];
-
 export function Header({
   linkGroups = LINK_GROUPS,
   links = LINKS,
@@ -81,7 +46,7 @@ export function Header({
     function MobileSubNav() {
       return (
         <div className="flex flex-nowrap">
-          <p className="text-sm font-bold text-black">{linkGroup.name}</p>
+          <p className="font-bold text-black">{linkGroup.name}</p>
           <p className="px-4 font-bold text-md text-warmGray-600">/</p>
           <SubNav>
             {linkGroup.group.map((link) => (
@@ -262,3 +227,38 @@ export function MainLink({
 }) {
   return <p className={cn("text-sm", { "font-bold": bold })}>{children}</p>;
 }
+
+const LINK_GROUPS: LinkGroup[] = [
+  {
+    name: "Office",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "Office", href: "" },
+    ],
+  },
+  {
+    name: "Hotel",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "Hotel", href: "" },
+    ],
+  },
+  {
+    name: "School",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "School", href: "" },
+    ],
+  },
+];
+const LINKS: Link[] = [
+  { name: "Home", href: "" },
+  { name: "Cases", href: "" },
+  { name: "Contact Us", href: "" },
+];

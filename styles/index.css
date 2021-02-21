@@ -35,5 +35,7 @@
 
 /* Your own custom utilities */
 @layer base {
-
+    p {
+        @apply text-sm lg:text-base
+    }
 }
