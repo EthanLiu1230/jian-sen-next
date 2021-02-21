@@ -12,7 +12,7 @@ export function Box({
 }) {
   return (
     <div
-      className={cn("rounded text-xs", {
+      className={cn("rounded-xl text-xs", {
         "bg-warmGray-200 text-warmGray-600": variant === "fill",
         "bg-primary text-white": variant === "filled",
         "border text-warmGray-600 border-warmGray-300": variant === "outline",

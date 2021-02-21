@@ -3,8 +3,6 @@ import { ProductCategory } from "../components/sections/Products";
 import { Cases } from "../components/sections/Cases";
 
 import { Header } from "../components/Header";
-import { HeroCarousel } from "../components/carousel/HeroCarousel";
-import { IMAGES } from "../DUMMY";
 
 export default function Home() {
   return (
