@@ -82,7 +82,7 @@ export function Header({
       return (
         <div className="flex flex-nowrap">
           <p className="text-sm font-bold text-black">{linkGroup.name}</p>
-          <p className="px-4 text-md font-bold text-warmGray-600">/</p>
+          <p className="px-4 font-bold text-md text-warmGray-600">/</p>
           <SubNav>
             {linkGroup.group.map((link) => (
               <a href={link.href}>
@@ -96,7 +96,7 @@ export function Header({
 
     return (
       <>
-        <div className="grid grid-cols-3 items-center py-3 px-4 ">
+        <div className="grid grid-cols-3 items-center py-3 px-4">
           <div className="justify-self-start">
             <MenuToggle opened={opened} onClick={() => setOpened(!opened)} />
           </div>
@@ -105,7 +105,7 @@ export function Header({
           </div>
         </div>
         {showMobileSubNav && (
-          <div className="px-4 py-3">
+          <div className="py-3 px-4">
             <MobileSubNav />
           </div>
         )}
@@ -162,18 +162,18 @@ export function Header({
 
     return (
       <>
-        <div className="container flex justify-between items-center py-4 px-3 w-full">
+        <div className="container flex justify-between items-center p-4 w-full">
           <nav className="flex space-x-10">
-            {linkGroups.map((lg, index) => (
+            {linkGroups.map((group, index) => (
               <div
                 key={index}
                 onMouseEnter={() => {
-                  setGroup(lg);
+                  setGroup(group);
                   setShowSubNav(true);
                 }}
                 onMouseLeave={() => setShowSubNav(false)}
               >
-                <Link>{lg.name}</Link>
+                <MainLink>{group.name}</MainLink>
               </div>
             ))}
           </nav>
@@ -185,7 +185,7 @@ export function Header({
           <nav className="flex space-x-10">
             {links.map((link) => (
               <a href={link.href}>
-                <Link>{link.name}</Link>
+                <MainLink>{link.name}</MainLink>
               </a>
             ))}
           </nav>
@@ -221,24 +221,6 @@ export function SubNav({ children }: { children: ReactNode }) {
   return <nav className="flex pb-3 space-x-10 w-full">{children}</nav>;
 }
 
-export function Link({
-  children,
-  bold,
-}: {
-  children: ReactNode;
-  bold?: boolean;
-}) {
-  return (
-    <p
-      className={cn("text-sm", {
-        "font-bold": bold,
-      })}
-    >
-      {children}
-    </p>
-  );
-}
-
 export function SubLink({
   children,
   selected = false,
@@ -269,4 +251,14 @@ export function SubLink({
       )}
     </span>
   );
+}
+
+export function MainLink({
+  children,
+  bold,
+}: {
+  children: ReactNode;
+  bold?: boolean;
+}) {
+  return <p className={cn("text-sm", { "font-bold": bold })}>{children}</p>;
 }
