@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Header } from "../components/Header";
 import { Box } from "../components/atomic/Box";
 import { HeroCarousel } from "../components/carousel/HeroCarousel";
-import { CASES, IMAGES, PRODUCTS } from "../DUMMY";
+import { PRODUCTS } from "../DUMMY";
 import { IconSofa } from "../public/product-icons/IconSofa";
 import { circulateIndex } from "../components/data/utils";
 import {
@@ -11,8 +11,15 @@ import {
   CarouselIndicatorGroup,
 } from "../components/atomic/CarouselIndicator";
 import { CarouselButton } from "../components/atomic/buttons/CarouselButton";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import faker from "faker";
+import { range } from "lodash";
+import { options } from "colorette";
 
-export default function HomePage() {
+export default function HomePage({
+  hero,
+  cases,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   function Hero() {
     return (
       <div className="container grid grid-cols-1 gap-8 py-8 md:grid-cols-2">
@@ -20,20 +27,15 @@ export default function HomePage() {
           <h1 className="text-2xl font-extrabold lg:text-4xl">
             JIANSEN <br /> Office Furniture
           </h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-            animi cum dignissimos dolorum eveniet ex harum hic in ipsam
-            laboriosam neque nisi, non numquam qui quia ratione repudiandae,
-            sequi voluptatum.
-          </p>
+          <p>{hero.description}</p>
           <button className="flex place-self-center md:place-self-start">
             <Box variant="filled">
-              <div className="py-3 px-6 text-sm lg:px-12">See Product</div>
+              <div className="py-3 px-6 text-sm lg:px-12">Explore More</div>
             </Box>
           </button>
         </div>
         <div className="hidden place-self-center w-4/5 md:block">
-          <HeroCarousel images={IMAGES} />
+          <HeroCarousel images={hero.images} />
         </div>
       </div>
     );
@@ -106,15 +108,7 @@ export default function HomePage() {
     );
   }
 
-  function Cases({
-    cases = CASES,
-  }: {
-    cases?: {
-      image: string;
-      title: string;
-      text: string;
-    }[];
-  }) {
+  function Cases() {
     const [cur, setCur] = useState(0);
 
     const ci = circulateIndex(cases.length);
@@ -134,7 +128,7 @@ export default function HomePage() {
           <div className="relative md:col-start-2">
             <div className="relative pb-4/5 lg:pb-13/10">
               <img
-                src={at(cur).image}
+                src={at(cur).images[0]}
                 alt="i"
                 className="rounded-3xl img-ratio"
               />
@@ -158,14 +152,14 @@ export default function HomePage() {
             <h3 className="mt-7 mb-4 text-xl font-bold md:mt-0 lg:text-2xl">
               {at(cur).title}
             </h3>
-            <p>{at(cur).text}</p>
+            <p>{at(cur).description}</p>
           </div>
           {/*   next image */}
           <div className="hidden lg:block">
             <div className="px-8">
               <div className="relative pb-13/10">
                 <img
-                  src={at(cur + 1).image}
+                  src={at(cur + 1).images[0]}
                   alt="img"
                   className="rounded-3xl img-ratio"
                 />
@@ -198,3 +192,31 @@ export default function HomePage() {
     </>
   );
 }
+
+interface Article {
+  title: string;
+  description: string;
+  images: string[];
+}
+
+const generateArticle = (): Article => {
+  return {
+    title: faker.lorem.words(),
+    description: faker.lorem.paragraph(),
+    images: range(faker.random.number({ min: 3, max: 6 })).map(() =>
+      faker.image.image()
+    ),
+  };
+};
+
+export const getStaticProps = async (context) => {
+  // ...
+  return {
+    props: {
+      hero: generateArticle(),
+      cases: range(faker.random.number({ min: 3, max: 6 })).map(() =>
+        generateArticle()
+      ),
+    },
+  };
+};
