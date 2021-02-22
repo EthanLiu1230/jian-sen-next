@@ -2,16 +2,20 @@ import React from "react";
 import { Header } from "../components/Header";
 import { Filter } from "../components/Filter";
 import { Card } from "../components/Card";
+import { InferGetStaticPropsType } from "next";
 
 const cards = [1, 2, 3, 4, 5, 6];
-export default function products() {
+
+export default function products(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
   return (
     <>
       <Header />
       <div className="container flex flex-col gap-6 py-4 px-4 pt-28 md:flex-row">
         <div className="md:w-1/3 lg:w-1/4">
-          <h1 className="mb-6 text-xl">Desk</h1>
-          <div className="flex gap-4 md:flex-col">
+          <h1 className="my-6 text-xl font-bold">Desk</h1>
+          <div className="flex gap-4 md:flex-col md:w-5/6">
             <div className="flex-auto">
               <Filter key={1} />
             </div>
@@ -35,3 +39,9 @@ export default function products() {
     </>
   );
 }
+
+export const getStaticProps = async () => {
+  return {
+    props: {},
+  };
+};
