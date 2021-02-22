@@ -17,7 +17,7 @@ export default function HomePage() {
     return (
       <div className="container grid grid-cols-1 gap-8 py-8 md:grid-cols-2">
         <div className="flex flex-col gap-6 place-self-center w-3/4 text-center md:text-left lg:gap-8">
-          <h1 className="text-2xl font-bold lg:text-4xl lg:font-extrabold">
+          <h1 className="text-2xl font-extrabold lg:text-4xl">
             JIANSEN <br /> Office Furniture
           </h1>
           <p>
@@ -32,7 +32,7 @@ export default function HomePage() {
             </Box>
           </button>
         </div>
-        <div className="hidden place-self-center w-3/4 md:block">
+        <div className="hidden place-self-center w-4/5 md:block">
           <HeroCarousel images={IMAGES} />
         </div>
       </div>
@@ -67,11 +67,7 @@ export default function HomePage() {
         <a
           {...props}
           onMouseOver={onMouseOver}
-          className="flex flex-col items-center py-2 justify-around md:border-2 rounded-lg
-        transform transition duration-300 hover:-translate-y-0.5
-        hover:bg-primary hover:text-white hover:border-primary
-        hover:shadow-xl
-       "
+          className="flex flex-col items-center py-2 justify-around md:border-2 rounded-lg transform transition duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-white hover:border-primary hover:shadow-xl"
         >
           <div className="w-7">
             <Icon />
@@ -82,9 +78,9 @@ export default function HomePage() {
     }
 
     return (
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="container grid grid-cols-1 gap-14 md:grid-cols-2">
         {/*left*/}
-        <div className="relative place-self-center w-3/4">
+        <div className="relative place-self-center w-4/5">
           {/* product image */}
           <div className="relative pb-3/5">
             <img
@@ -101,10 +97,7 @@ export default function HomePage() {
           />
         </div>
         {/*right*/}
-        <div
-          className="w-5/6 justify-self-center grid grid-cols-3 grid-rows-2 md:grid-cols-2 md:grid-rows-3
-              gap-x-5 gap-y-3 md:gap-x-7 md:gap-y-5 lg:gap-x-10 lg:gap-y-8"
-        >
+        <div className="grid grid-cols-3 grid-rows-2 gap-y-3 gap-x-5 place-self-center w-4/5 md:grid-cols-2 md:grid-rows-3 md:gap-x-7 md:gap-y-5 lg:gap-x-10 lg:gap-y-8">
           {products.map((p, i) => (
             <ProductLink onMouseOver={() => setCur(i)} key={i} {...p} />
           ))}
@@ -136,7 +129,7 @@ export default function HomePage() {
     return (
       <div className="relative py-6 md:py-10">
         {/* content */}
-        <div className="container mx-auto w-4/5 lg:w-full md:grid md:grid-cols-2 md:grid-rows-1 lg:grid-cols-3 px-4">
+        <div className="container px-4 mx-auto w-4/5 lg:w-full md:grid md:grid-cols-2 md:grid-rows-1 lg:grid-cols-3">
           {/* current image */}
           <div className="relative md:col-start-2">
             <div className="relative pb-4/5 lg:pb-13/10">
@@ -162,7 +155,9 @@ export default function HomePage() {
           </div>
           {/* text */}
           <div className="text-left md:col-start-1 md:row-start-1 md:self-center md:w-4/5">
-            <h3 className="mt-7 mb-4 md:mt-0">{at(cur).title}</h3>
+            <h3 className="mt-7 mb-4 text-xl font-bold md:mt-0 lg:text-2xl">
+              {at(cur).title}
+            </h3>
             <p>{at(cur).text}</p>
           </div>
           {/*   next image */}
@@ -195,8 +190,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-
-      <div className="pt-16 space-y-16">
+      <div className="pt-16 space-y-32">
         <Hero />
         <ProductCategory />
         <Cases />
