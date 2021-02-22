@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Logo } from "./atomic/Logo";
 import { MenuToggle } from "./atomic/buttons/MenuToggle";
-import { Separator } from "./atomic/Separator";
 import { useTransition } from "react-spring";
 import { animated } from "react-spring";
 import { useOutsideClick } from "../hooks/useOutsideClick";
@@ -19,41 +18,6 @@ interface LinkGroup {
   group: Link[];
 }
 
-const LINK_GROUPS: LinkGroup[] = [
-  {
-    name: "Office",
-    group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "Office", href: "" },
-    ],
-  },
-  {
-    name: "Hotel",
-    group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "Hotel", href: "" },
-    ],
-  },
-  {
-    name: "School",
-    group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "School", href: "" },
-    ],
-  },
-];
-const LINKS: Link[] = [
-  { name: "Home", href: "" },
-  { name: "Cases", href: "" },
-  { name: "Contact Us", href: "" },
-];
-
 export function Header({
   linkGroups = LINK_GROUPS,
   links = LINKS,
@@ -66,9 +30,9 @@ export function Header({
     const [linkGroup, setLinkGroup] = useState<LinkGroup>(linkGroups[0]);
     const [showMobileSubNav, setShowMobileSubNav] = useState<boolean>(false);
 
-    useEffect(() => {
-      setShowMobileSubNav(!opened);
-    }, [opened]);
+    // useEffect(() => {
+    //   setShowMobileSubNav(!opened);
+    // }, [opened]);
 
     const transitions = useTransition(opened, null, {
       from: { transform: "translate3d(-100%,0,0)" },
@@ -81,8 +45,10 @@ export function Header({
     function MobileSubNav() {
       return (
         <div className="flex flex-nowrap">
-          <p className="text-sm font-bold text-black">{linkGroup.name}</p>
-          <p className="px-4 text-md font-bold text-warmGray-600">/</p>
+          <p className="py-4 px-2 text-sm font-bold text-black">
+            {linkGroup.name}
+          </p>
+          <p className="py-4 px-2 text-sm font-bold text-warmGray-600">/</p>
           <SubNav>
             {linkGroup.group.map((link) => (
               <a href={link.href}>
@@ -95,8 +61,8 @@ export function Header({
     }
 
     return (
-      <>
-        <div className="grid grid-cols-3 items-center py-3 px-4 ">
+      <div className="divide-y">
+        <div className="grid grid-cols-3 items-center py-3 px-4">
           <div className="justify-self-start">
             <MenuToggle opened={opened} onClick={() => setOpened(!opened)} />
           </div>
@@ -104,11 +70,7 @@ export function Header({
             <Logo />
           </div>
         </div>
-        {showMobileSubNav && (
-          <div className="px-4 py-3">
-            <MobileSubNav />
-          </div>
-        )}
+        {showMobileSubNav && <MobileSubNav />}
         {transitions.map(
           ({ item, props }) =>
             item && (
@@ -116,32 +78,33 @@ export function Header({
                 <animated.div
                   ref={outsideClickRef}
                   style={{ transform: props.transform, opacity: 1 }}
-                  className="overflow-scroll px-4 w-3/4 h-full bg-white no-scrollbar"
+                  className="overflow-scroll px-4 w-3/4 h-full bg-white divide-y no-scrollbar"
                 >
                   <div className="flex flex-wrap py-10">
                     {linkGroups.map((lg) => (
-                      <div key={lg.name} className="mr-3 mb-3 cursor-pointer">
-                        <button onClick={() => setLinkGroup(lg)}>
+                      <div key={lg.name} className="mr-4 mb-4">
+                        <button
+                          className="focus:outline-none"
+                          onClick={() => setLinkGroup(lg)}
+                        >
                           <Box variant={lg === linkGroup ? "filled" : "fill"}>
-                            <p className="text-sm p-box">{lg.name}</p>
+                            <p className="text-sm px-4 py-3">{lg.name}</p>
                           </Box>
                         </button>
                       </div>
                     ))}
                   </div>
-                  <Separator />
                   <div className="py-10">
                     {linkGroup.group.map((l) => (
-                      <a className="block mb-6 text-xs" href={l.href}>
+                      <a className="block mb-6 text-sm" href={l.href}>
                         {l.name}
                       </a>
                     ))}
                   </div>
-                  <Separator />
                   <div className="py-10">
                     {links.map((link) => (
                       <a
-                        className="block mb-6 text-xs text-warmGray-600"
+                        className="block mb-6 text-sm text-warmGray-600"
                         href={link.href}
                       >
                         {link.name}
@@ -152,7 +115,7 @@ export function Header({
               </div>
             )
         )}
-      </>
+      </div>
     );
   }
 
@@ -161,20 +124,23 @@ export function Header({
     const [group, setGroup] = useState<LinkGroup>(null);
 
     return (
-      <>
-        <div className="container flex justify-between items-center py-4 px-3 w-full">
+      <div className="divide-y">
+        {/* Main Nav */}
+        <div className="container flex justify-between items-center p-4 w-full">
           <nav className="flex space-x-10">
-            {linkGroups.map((lg, index) => (
-              <div
-                key={index}
-                onMouseEnter={() => {
-                  setGroup(lg);
-                  setShowSubNav(true);
-                }}
-                onMouseLeave={() => setShowSubNav(false)}
-              >
-                <Link>{lg.name}</Link>
-              </div>
+            {linkGroups.map((group, index) => (
+              <a href="">
+                <div
+                  key={index}
+                  onMouseEnter={() => {
+                    setGroup(group);
+                    setShowSubNav(true);
+                  }}
+                  onMouseLeave={() => setShowSubNav(false)}
+                >
+                  <MainLink>{group.name}</MainLink>
+                </div>
+              </a>
             ))}
           </nav>
           <nav>
@@ -185,11 +151,12 @@ export function Header({
           <nav className="flex space-x-10">
             {links.map((link) => (
               <a href={link.href}>
-                <Link>{link.name}</Link>
+                <MainLink>{link.name}</MainLink>
               </a>
             ))}
           </nav>
         </div>
+        {/* Sub Nav */}
         {showSubNav && (
           <div className="container px-4">
             <SubNav>
@@ -201,7 +168,7 @@ export function Header({
             </SubNav>
           </div>
         )}
-      </>
+      </div>
     );
   }
 
@@ -218,28 +185,15 @@ export function Header({
 }
 
 export function SubNav({ children }: { children: ReactNode }) {
-  return <nav className="flex pb-3 space-x-10 w-full">{children}</nav>;
-}
-
-export function Link({
-  children,
-  bold,
-}: {
-  children: ReactNode;
-  bold?: boolean;
-}) {
   return (
-    <p
-      className={cn("text-sm", {
-        "font-bold": bold,
-      })}
-    >
-      {children}
-    </p>
+    <nav className="flex p-4 space-x-6 w-full lg:space-x-10">{children}</nav>
   );
 }
 
-export function SubLink({
+/**
+ * Link Styles
+ */
+function SubLink({
   children,
   selected = false,
 }: {
@@ -270,3 +224,46 @@ export function SubLink({
     </span>
   );
 }
+
+function MainLink({ children, bold }: { children: ReactNode; bold?: boolean }) {
+  return <p className={cn("text-sm", { "font-bold": bold })}>{children}</p>;
+}
+
+/**
+ *  default props
+ *  */
+const LINK_GROUPS: LinkGroup[] = [
+  {
+    name: "Office",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "Office", href: "" },
+    ],
+  },
+  {
+    name: "Hotel",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "Hotel", href: "" },
+    ],
+  },
+  {
+    name: "School",
+    group: [
+      { name: "Desk", href: "" },
+      { name: "Chair", href: "" },
+      { name: "Sofa", href: "" },
+      { name: "School", href: "" },
+    ],
+  },
+];
+
+const LINKS: Link[] = [
+  { name: "Home", href: "" },
+  { name: "Cases", href: "" },
+  { name: "Contact Us", href: "" },
+];

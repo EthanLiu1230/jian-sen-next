@@ -26,7 +26,7 @@
 }
 
 .p-box {
-    @apply py-2.5 px-4
+    @apply py-3 px-5
 }
 
 /* Start purging... */
@@ -35,5 +35,7 @@
 
 /* Your own custom utilities */
 @layer base {
-
+    p {
+        @apply text-sm lg:text-base
+    }
 }
