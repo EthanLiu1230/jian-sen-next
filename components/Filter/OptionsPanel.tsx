@@ -3,7 +3,6 @@ import { capitalize } from "lodash";
 import { countSelectedItems } from "./model";
 import { Box } from "../atomic/Box";
 import { Item } from "./index";
-import { Separator } from "../atomic/Separator";
 
 export function OptionsPanel({
   label = "OptionsPanel",
@@ -30,26 +29,27 @@ export function OptionsPanel({
 
   return (
     <div className="px-4 w-full bg-white rounded shadow-spread sm:w-96">
-      <div className="flex justify-between items-end py-4 w-full">
-        <p className="text-sm text-warmGray-500">{label}</p>
-        <p className="text-xs text-warmGray-500">
-          {countSelectedItems(items)} selected
-        </p>
-      </div>
-      <Separator />
-      <div className="overflow-y-auto max-h-48 no-scrollbar">
-        <div className="grid grid-cols-2 gap-4 pt-4">
-          {items.map(({ option, selected }) => (
-            <button
-              className="focus:outline-none"
-              key={option}
-              onClick={() => updateItem({ option, selected: !selected })}
-            >
-              <Box variant={selected ? "outlined" : "outline"}>
-                <p className="text-xs p-box">{capitalize(option)}</p>
-              </Box>
-            </button>
-          ))}
+      <div className="divide-y">
+        <div className="flex justify-between items-end py-4 w-full">
+          <p className="text-sm text-warmGray-500">{label}</p>
+          <p className="text-xs text-warmGray-500">
+            {countSelectedItems(items)} selected
+          </p>
+        </div>
+        <div className="overflow-y-auto max-h-48 no-scrollbar">
+          <div className="grid grid-cols-2 gap-4 pt-4">
+            {items.map(({ option, selected }) => (
+              <button
+                className="focus:outline-none"
+                key={option}
+                onClick={() => updateItem({ option, selected: !selected })}
+              >
+                <Box variant={selected ? "outlined" : "outline"}>
+                  <p className="text-xs p-box">{capitalize(option)}</p>
+                </Box>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <div className="py-4">

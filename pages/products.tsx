@@ -4,7 +4,7 @@ import { Filter } from "../components/Filter";
 import { Card } from "../components/Card";
 
 const cards = [1, 2, 3, 4, 5, 6];
-export default function _products() {
+export default function products() {
   return (
     <>
       <Header />
