@@ -11,10 +11,13 @@ import {
   CarouselIndicatorGroup,
 } from "../components/atomic/CarouselIndicator";
 import { CarouselButton } from "../components/atomic/buttons/CarouselButton";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import {
+  GetStaticProps,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next";
 import faker from "faker";
 import { range } from "lodash";
-import { options } from "colorette";
 
 export default function HomePage({
   hero,
@@ -209,7 +212,7 @@ const generateArticle = (): Article => {
   };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: GetStaticPropsContext) => {
   // ...
   return {
     props: {

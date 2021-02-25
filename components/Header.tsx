@@ -129,7 +129,7 @@ export function Header({
         <div className="container flex justify-between items-center p-4 w-full">
           <nav className="flex space-x-10">
             {linkGroups.map((group, index) => (
-              <a href="">
+              <a key={group.name} href="">
                 <div
                   key={index}
                   onMouseEnter={() => {
@@ -149,8 +149,8 @@ export function Header({
             </a>
           </nav>
           <nav className="flex space-x-10">
-            {links.map((link) => (
-              <a href={link.href}>
+            {links.map((link, index) => (
+              <a key={index} href={link.href}>
                 <MainLink>{link.name}</MainLink>
               </a>
             ))}
