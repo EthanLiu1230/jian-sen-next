@@ -29,22 +29,6 @@ export const dataProvider: DataProvider = {
   ): Promise<CreateResult<RecordType>> {
     return Promise.resolve(undefined);
   },
-  async delete<RecordType>(
-    resource: string,
-    params: DeleteParams
-  ): Promise<DeleteResult<RecordType>> {
-    // return Promise.resolve(undefined);
-    const res = await client.service(resource).remove(params.id);
-    const { id, ...data } = res;
-    console.log("res", res);
-    return { data };
-  },
-  deleteMany(
-    resource: string,
-    params: DeleteManyParams
-  ): Promise<DeleteManyResult> {
-    return Promise.resolve(undefined);
-  },
 
   /**
    * getList and getOne must return same shapes of object
@@ -80,8 +64,17 @@ export const dataProvider: DataProvider = {
     resource: string,
     params: GetManyParams
   ): Promise<GetManyResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const { ids } = params;
+
+    const query: Query = {
+      id: {
+        $in: ids,
+      },
+    };
+
+    return client.service(resource).find({ query });
   },
+
   getManyReference<RecordType>(
     resource: string,
     params: GetManyReferenceParams
@@ -95,18 +88,42 @@ export const dataProvider: DataProvider = {
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
-    return Promise.resolve(undefined);
+    return client.service(resource).get(params.id);
   },
+
   update<RecordType>(
     resource: string,
     params: UpdateParams
   ): Promise<UpdateResult<RecordType>> {
     return Promise.resolve(undefined);
   },
+
   updateMany(
     resource: string,
     params: UpdateManyParams
   ): Promise<UpdateManyResult> {
     return Promise.resolve(undefined);
+  },
+
+  async delete<RecordType>(
+    resource: string,
+    params: DeleteParams
+  ): Promise<DeleteResult<RecordType>> {
+    const data = await client.service(resource).remove(params.id);
+    return { data };
+  },
+
+  async deleteMany(
+    resource: string,
+    params: DeleteManyParams
+  ): Promise<DeleteManyResult> {
+    const { ids } = params;
+    const query: Query = {
+      id: {
+        $in: ids,
+      },
+    };
+    const data = await client.service(resource).remove(null, { query });
+    return { data };
   },
 };
