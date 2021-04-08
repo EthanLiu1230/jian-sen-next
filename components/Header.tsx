@@ -1,11 +1,11 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Logo } from "./atomic/Logo";
-import { MenuToggle } from "./atomic/buttons/MenuToggle";
+import { Logo } from "./Logo";
+import { MenuToggle } from "./buttons/MenuToggle";
 import { useTransition } from "react-spring";
 import { animated } from "react-spring";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useRef } from "react";
-import { Box } from "./atomic/Box";
+import { Box } from "./Box";
 import cn from "classnames";
 
 interface Link {

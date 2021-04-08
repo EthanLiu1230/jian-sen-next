@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { capitalize } from "lodash";
 import { countSelectedItems } from "./model";
-import { Box } from "../atomic/Box";
+import { Box } from "../Box";
 import { Item } from "./index";
 
 export function OptionsPanel({

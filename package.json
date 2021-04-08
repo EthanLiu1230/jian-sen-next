@@ -7,11 +7,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@feathersjs/authentication-client": "^4.5.11",
+    "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/rest-client": "^4.5.11",
     "classnames": "^2.2.6",
     "faker": "^5.4.0",
     "lodash": "^4.17.20",
     "next": "latest",
+    "ra-data-json-server": "^3.14.2",
     "react": "^16.13.1",
+    "react-admin": "^3.14.2",
     "react-dom": "^16.13.1",
     "react-markdown": "^5.0.3",
     "react-spring": "^8.0.27"

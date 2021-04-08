@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Header } from "../components/Header";
-import { Box } from "../components/atomic/Box";
+import { Box } from "../components/Box";
 import { HeroCarousel } from "../components/carousel/HeroCarousel";
 import { PRODUCTS } from "../DUMMY";
 import { IconSofa } from "../public/product-icons/IconSofa";
@@ -9,10 +9,9 @@ import { circulateIndex } from "../components/data/utils";
 import {
   CarouselIndicator,
   CarouselIndicatorGroup,
-} from "../components/atomic/CarouselIndicator";
-import { CarouselButton } from "../components/atomic/buttons/CarouselButton";
+} from "../components/carousel/CarouselIndicator";
+import { CarouselButton } from "../components/buttons/CarouselButton";
 import {
-  GetStaticProps,
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from "next";

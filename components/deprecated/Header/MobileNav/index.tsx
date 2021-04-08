@@ -10,7 +10,7 @@ import {
 import { Props } from "../index";
 import { Logo } from "../Logo";
 import { NavLink } from "../NavLink";
-import { MenuToggle } from "../../../atomic/buttons/MenuToggle";
+import { MenuToggle } from "../../../buttons/MenuToggle";
 
 export function MobileNav({ navLinks }: Props) {
   const [open, setOpen] = useState<boolean>(false);

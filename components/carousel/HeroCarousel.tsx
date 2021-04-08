@@ -4,7 +4,7 @@ import { circulateIndex } from "../data/utils";
 import {
   CarouselIndicator,
   CarouselIndicatorGroup,
-} from "../atomic/CarouselIndicator";
+} from "./CarouselIndicator";
 
 export function HeroCarousel({ images = defaultImages }: { images: string[] }) {
   const [cur, setCur] = useState(0);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DropDown } from "./DropDown";
 import { countSelectedItems, yieldItems } from "./model";
 import { OptionsPanel } from "./OptionsPanel";
-import { PopUpContainer } from "../atomic/containers/PopupContainer";
+import { PopUpContainer } from "../containers/PopupContainer";
 import { filterProps } from "./data";
 
 export interface Item {
