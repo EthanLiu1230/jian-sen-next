@@ -6,22 +6,35 @@ import {
     GetListResult, GetManyParams, GetManyReferenceParams, GetManyReferenceResult, GetManyResult, GetOneParams,
     GetOneResult, UpdateManyParams, UpdateManyResult, UpdateParams, UpdateResult
 } from 'react-admin';
+import client from "../client/client";
 
 /**
  * getList and getOne must return same shapes of object
  */
+
+
+
 export const dataProvider: DataProvider = {
     create<RecordType>(resource: string, params: CreateParams): Promise<CreateResult<RecordType>> {
         return Promise.resolve(undefined);
     },
-    delete<RecordType>(resource: string, params: DeleteParams): Promise<DeleteResult<RecordType>> {
-        return Promise.resolve(undefined);
-    },
+    async delete<RecordType>(resource: string, params: DeleteParams): Promise<DeleteResult<RecordType>> {
+        // return Promise.resolve(undefined);
+        const res = await client.service(resource).remove(params.id)
+        const {id, ...data} = res;
+        console.log(
+            'res', res
+        )
+        return {data}
+    }
+    ,
     deleteMany(resource: string, params: DeleteManyParams): Promise<DeleteManyResult> {
         return Promise.resolve(undefined);
     },
-    getList<RecordType>(resource: string, params: GetListParams): Promise<GetListResult<RecordType>> {
-        return Promise.resolve(undefined);
+    async getList<RecordType>(resource: string, params: GetListParams): Promise<GetListResult<RecordType>> {
+
+        const result = await client.service(resource).find();
+        return result
     },
     getMany<RecordType>(resource: string, params: GetManyParams): Promise<GetManyResult<RecordType>> {
         return Promise.resolve(undefined);
