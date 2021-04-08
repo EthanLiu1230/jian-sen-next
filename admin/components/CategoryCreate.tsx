@@ -4,7 +4,7 @@ import React from "react";
 const CategoryCreate = (props) => {
     return (
         <Create title={'Create a category'} {...props}>
-            <SimpleForm onSubmit={}>
+            <SimpleForm>
                 <TextInput source={'name'}/>
             </SimpleForm>
         </Create>
