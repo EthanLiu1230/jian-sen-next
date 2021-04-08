@@ -23,11 +23,12 @@ import client from "../client/client";
 import { Params, Query } from "@feathersjs/feathers";
 
 export const dataProvider: DataProvider = {
-  create<RecordType>(
+  async create<RecordType>(
     resource: string,
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const res = await client.service(resource).create(params.data);
+    return { data: res };
   },
 
   /**
@@ -109,8 +110,8 @@ export const dataProvider: DataProvider = {
     resource: string,
     params: DeleteParams
   ): Promise<DeleteResult<RecordType>> {
-    const data = await client.service(resource).remove(params.id);
-    return { data };
+    const res = await client.service(resource).remove(params.id);
+    return { data: res };
   },
 
   async deleteMany(
@@ -123,7 +124,7 @@ export const dataProvider: DataProvider = {
         $in: ids,
       },
     };
-    const data = await client.service(resource).remove(null, { query });
-    return { data };
+    const res = await client.service(resource).remove(null, { query });
+    return { data: res };
   },
 };
