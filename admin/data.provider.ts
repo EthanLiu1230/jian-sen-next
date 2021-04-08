@@ -84,19 +84,21 @@ export const dataProvider: DataProvider = {
   },
   /**
    * getList and getOne must return same shapes of object
-   */
-  getOne<RecordType>(
+   */ async getOne<RecordType>(
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
-    return client.service(resource).get(params.id);
+    const res = await client.service(resource).get(params.id);
+    return { data: res };
   },
 
-  update<RecordType>(
+  async update<RecordType>(
     resource: string,
     params: UpdateParams
   ): Promise<UpdateResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const { id, data } = params;
+    const res = await client.service(resource).update(id, data);
+    return { data: res };
   },
 
   updateMany(
