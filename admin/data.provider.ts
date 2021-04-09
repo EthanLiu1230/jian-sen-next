@@ -20,7 +20,7 @@ import {
   UpdateResult,
 } from "react-admin";
 import client from "../client/client";
-import { Params, Query } from "@feathersjs/feathers";
+import { Query } from "@feathersjs/feathers";
 
 export const dataProvider: DataProvider = {
   async create<RecordType>(
@@ -76,15 +76,18 @@ export const dataProvider: DataProvider = {
     return client.service(resource).find({ query });
   },
 
+  // todo
   getManyReference<RecordType>(
     resource: string,
     params: GetManyReferenceParams
   ): Promise<GetManyReferenceResult<RecordType>> {
     return Promise.resolve(undefined);
   },
+
   /**
    * getList and getOne must return same shapes of object
-   */ async getOne<RecordType>(
+   */
+  async getOne<RecordType>(
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
@@ -101,6 +104,7 @@ export const dataProvider: DataProvider = {
     return { data: res };
   },
 
+  // todo
   updateMany(
     resource: string,
     params: UpdateManyParams

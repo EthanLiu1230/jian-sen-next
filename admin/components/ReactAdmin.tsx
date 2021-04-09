@@ -1,9 +1,7 @@
 import { Admin, Resource } from "react-admin";
 import React from "react";
-import { CategoryList } from "./CategoryList";
 import { dataProvider } from "../data.provider";
-import CategoryCreate from "./CategoryCreate";
-import { CategoryEdit } from "./CategoryEdit";
+import { CategoryCreate, CategoryEdit, CategoryList } from "./Category";
 
 const ReactAdmin = () => (
   <Admin dataProvider={dataProvider}>
