@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Logo } from "./Logo";
 import { MenuToggle } from "./buttons/MenuToggle";
 import { useTransition } from "react-spring";
