@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-import { Header } from "../components/Header";
-import { Box } from "../components/Box";
+import { Box } from "../components/styles/Box";
 import { HeroCarousel } from "../components/carousel/HeroCarousel";
 import { PRODUCTS } from "../DUMMY";
 import { IconSofa } from "../public/product-icons/IconSofa";
@@ -11,12 +10,10 @@ import {
   CarouselIndicatorGroup,
 } from "../components/carousel/CarouselIndicator";
 import { CarouselButton } from "../components/buttons/CarouselButton";
-import {
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import faker from "faker";
 import { range } from "lodash";
+import { Nav } from "../components/Header/Nav";
 
 export default function HomePage({
   hero,
@@ -185,7 +182,7 @@ export default function HomePage({
 
   return (
     <>
-      <Header />
+      <Nav />
       <div className="pt-16 space-y-32">
         <Hero />
         <ProductCategory />

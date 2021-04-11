@@ -1,5 +1,4 @@
 import React from "react";
-import { Header } from "../components/Header";
 import { Filter } from "../components/Filter";
 import { Card } from "../components/Card";
 import { InferGetStaticPropsType } from "next";
