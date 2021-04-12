@@ -4,7 +4,7 @@ import { Logo } from "../../styles/Logo";
 import { Box } from "../../styles/Box";
 import { Link, LINK_GROUPS, LinkGroup, LINKS } from "../prop-types";
 import MenuToggle from "../../buttons/MenuToggle";
-import { motion, useCycle } from "framer-motion";
+import { motion, transform, useCycle } from "framer-motion";
 
 function MobileNavPanel({
   linkGroups = LINK_GROUPS,
@@ -62,11 +62,7 @@ export default function NavMobile({
   useOutsideClick(outsideClickRef, () => toggleOpen());
 
   return (
-    <motion.div
-      className="divide-y overflow-hidden"
-      initial={false}
-      animate={open}
-    >
+    <motion.div className="divide-y overflow-hidden" animate={open}>
       <div className="grid grid-cols-3 items-center py-3 px-4">
         <div className="justify-self-start">
           <MenuToggle toggle={() => toggleOpen()} />
@@ -76,11 +72,19 @@ export default function NavMobile({
         </div>
       </div>
       {open === "open" && (
-        <div className="absolute w-screen h-screen bg-fixed flex">
-          <div className="w-3/4 bg-white">
+        <div className="absolute w-screen h-screen flex">
+          <motion.div
+            className="w-3/4 bg-white"
+            variants={{
+              open: { x: 0, opacity: 1 },
+              closed: { x: "-100%", opacity: 0 },
+            }}
+            transition={{ ease: "linear" }}
+          >
             <MobileNavPanel links={links} linkGroups={linkGroups} />
-          </div>
-          <div
+          </motion.div>
+          <motion.div
+            variants={{ open: { opacity: 1 }, closed: { opacity: 0 } }}
             className="w-1/4 h-full bg-black bg-opacity-20"
             onClick={() => toggleOpen()}
           />
