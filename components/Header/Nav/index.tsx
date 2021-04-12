@@ -1,12 +1,11 @@
 import React from "react";
-import NavDesktop from "./desktop";
-import { MobileNav } from "../../deprecated/Header/MobileNav";
+import NavMobile from "./mobile";
 
 export function Nav() {
   return (
     <>
       <div className="md:hidden">
-        <MobileNav />
+        <NavMobile />
       </div>
       {/*<div className="hidden md:block">*/}
       {/*  <NavDesktop />*/}

@@ -10,7 +10,7 @@ import {
 import { Props } from "../index";
 import { Logo } from "../Logo";
 import { NavLink } from "../NavLink";
-import { MenuToggle } from "../../../buttons/MenuToggle";
+import { HamburgerToggle } from "../../../buttons/MenuToggle";
 
 export function MobileNav({ navLinks }: Props) {
   const [open, setOpen] = useState<boolean>(false);
@@ -43,7 +43,7 @@ export function MobileNav({ navLinks }: Props) {
         <div className={classNames("py-2 px-screen", { "bg-white": !open })}>
           <nav className="flex relative z-30 justify-between items-center">
             <Logo />
-            <MenuToggle opened={open} onClick={() => setOpen(!open)} />
+            <HamburgerToggle opened={open} onClick={() => setOpen(!open)} />
           </nav>
           {transition.map(
             ({ item, key }) =>
