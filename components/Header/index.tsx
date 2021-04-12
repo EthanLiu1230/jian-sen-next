@@ -1,6 +1,9 @@
 import React from "react";
-import { Link, LINK_GROUPS, LinkGroup, LINKS } from "./prop-types";
+import { Link, LINK_GROUPS, LinkGroup, LINKS } from "./props.type";
 import { Nav } from "./Nav";
+import NavMobile from "./NavMobile";
+import SubNavMobile from "./SubNavMobile";
+import NavDesktop from "./NavDesktop";
 
 export function Header({
   linkGroups = LINK_GROUPS,
@@ -11,7 +14,13 @@ export function Header({
 }) {
   return (
     <header className="sticky top-0 z-50 w-full bg-white">
-      <Nav />
+      <div className="md:hidden">
+        <NavMobile />
+        <SubNavMobile />
+      </div>
+      <div className="hidden md:block">
+        <NavDesktop />
+      </div>
     </header>
   );
 }

@@ -20,7 +20,7 @@ module.exports = {
         "4/5": "80%",
         "9/10": "90%",
         "13/10": "130%",
-        "4.5": "1.125rem",
+        4.5: "1.125rem",
       },
       boxShadow: {
         spread: "0px 4px 16px rgba(0, 0, 0, 0.16)",
@@ -35,8 +35,7 @@ module.exports = {
         "-1/5": "-20%",
       },
       colors: {
-        // primary: "#e4ab81",
-        primary: "#db7125",
+        primary: "#DB7125",
         secondary: "#F7E6D9",
         light: "#FCF9F3",
         warmGray: colors.warmGray,

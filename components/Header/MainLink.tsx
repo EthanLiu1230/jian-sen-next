@@ -3,10 +3,23 @@ import cn from "classnames";
 
 export default function MainLink({
   children,
-  bold,
+  selected = false,
 }: {
   children: ReactNode;
-  bold?: boolean;
+  selected?: boolean;
 }) {
-  return <p className={cn("text-sm", { "font-bold": bold })}>{children}</p>;
+  return (
+    <p
+      className={cn(
+        {
+          "font-bold": selected,
+          "text-shadow": selected,
+          "text-primary": selected,
+        },
+        "hover:text-primary hover:text-shadow"
+      )}
+    >
+      {children}
+    </p>
+  );
 }

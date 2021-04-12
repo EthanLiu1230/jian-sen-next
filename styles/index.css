@@ -29,6 +29,10 @@
     @apply py-3 px-5
 }
 
+.text-shadow {
+    text-shadow: 0 0 2px rgba(219, 113, 37, 0.2);
+}
+
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */

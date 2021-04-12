@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { Logo } from "../../styles/Logo";
-import { Box } from "../../styles/Box";
-import { Link, LINK_GROUPS, LinkGroup, LINKS } from "../prop-types";
-import MenuToggle from "../../buttons/MenuToggle";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { Logo } from "../styles/Logo";
+import { Box } from "../styles/Box";
+import { Link, LINK_GROUPS, LinkGroup, LINKS } from "./props.type";
+import MenuToggle from "../buttons/MenuToggle";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
 
 function MobileNavPanel({
