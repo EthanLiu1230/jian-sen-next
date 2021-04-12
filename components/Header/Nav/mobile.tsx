@@ -16,7 +16,7 @@ function MobileNavPanel({
   const [linkGroup, setLinkGroup] = useState<LinkGroup>(linkGroups[0]);
 
   return (
-    <div className="overflow-scroll px-4 w-3/4 h-full bg-white divide-y no-scrollbar">
+    <div className="overflow-scroll px-4 w-full h-full divide-y no-scrollbar">
       <div className="flex flex-wrap py-10">
         {linkGroups.map((lg) => (
           <div key={lg.name} className="mr-4 mb-4">
@@ -76,8 +76,14 @@ export default function NavMobile({
         </div>
       </div>
       {open === "open" && (
-        <div className="absolute z-20 w-screen h-screen bg-black bg-opacity-20 md:hidden bg-fixed">
-          <MobileNavPanel />
+        <div className="absolute w-screen h-screen bg-fixed flex">
+          <div className="w-3/4 bg-white">
+            <MobileNavPanel links={links} linkGroups={linkGroups} />
+          </div>
+          <div
+            className="w-1/4 h-full bg-black bg-opacity-20"
+            onClick={() => toggleOpen()}
+          />
         </div>
       )}
     </motion.div>
