@@ -10,7 +10,7 @@ export function Header({
   links?: Link[];
 }) {
   return (
-    <header className="fixed z-50 w-full bg-white">
+    <header className="sticky top-0 z-50 w-full bg-white">
       <Nav />
     </header>
   );

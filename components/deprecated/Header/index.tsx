@@ -11,7 +11,7 @@ const defaultProps = {
   navLinks: [
     { text: "Home", href: "#" },
     { text: "Products", href: "#" },
-    { text: "Cases", href: "#" },
+    { text: "CasesSection", href: "#" },
     { text: "Contact", href: "#" },
   ],
 };
