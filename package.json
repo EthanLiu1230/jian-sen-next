@@ -23,7 +23,6 @@
     "react-spring": "^8.0.27"
   },
   "devDependencies": {
-    "@svgr/webpack": "^5.5.0",
     "@types/classnames": "^2.2.11",
     "@types/faker": "^5.1.7",
     "@types/lodash": "^4.14.166",
