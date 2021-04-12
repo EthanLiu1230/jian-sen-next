@@ -4,7 +4,7 @@ import { Logo } from "../../styles/Logo";
 import { Box } from "../../styles/Box";
 import { Link, LINK_GROUPS, LinkGroup, LINKS } from "../prop-types";
 import MenuToggle from "../../buttons/MenuToggle";
-import { motion, transform, useCycle } from "framer-motion";
+import { AnimatePresence, motion, useCycle } from "framer-motion";
 
 function MobileNavPanel({
   linkGroups = LINK_GROUPS,
@@ -49,6 +49,39 @@ function MobileNavPanel({
   );
 }
 
+function AnimateShowPanel(props: {
+  links: Link[];
+  linkGroups: LinkGroup[];
+  onClick: () => void;
+  isVisible: boolean;
+}) {
+  return (
+    <AnimatePresence>
+      {props.isVisible && (
+        <motion.div
+          key="bg"
+          className="absolute w-screen h-screen flex bg-black bg-opacity-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="w-3/4 bg-white"
+            key="panel"
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ ease: "linear" }}
+          >
+            <MobileNavPanel links={props.links} linkGroups={props.linkGroups} />
+          </motion.div>
+          <div className="w-1/4 h-full" onClick={props.onClick} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function NavMobile({
   linkGroups = LINK_GROUPS,
   links = LINKS,
@@ -71,25 +104,12 @@ export default function NavMobile({
           <Logo />
         </div>
       </div>
-      {open === "open" && (
-        <div className="absolute w-screen h-screen flex">
-          <motion.div
-            className="w-3/4 bg-white"
-            variants={{
-              open: { x: 0, opacity: 1 },
-              closed: { x: "-100%", opacity: 0 },
-            }}
-            transition={{ ease: "linear" }}
-          >
-            <MobileNavPanel links={links} linkGroups={linkGroups} />
-          </motion.div>
-          <motion.div
-            variants={{ open: { opacity: 1 }, closed: { opacity: 0 } }}
-            className="w-1/4 h-full bg-black bg-opacity-20"
-            onClick={() => toggleOpen()}
-          />
-        </div>
-      )}
+      <AnimateShowPanel
+        links={links}
+        linkGroups={linkGroups}
+        onClick={() => toggleOpen()}
+        isVisible={open === "open"}
+      />
     </motion.div>
   );
 }
