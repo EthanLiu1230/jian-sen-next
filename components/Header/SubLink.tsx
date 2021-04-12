@@ -11,10 +11,13 @@ export default function SubLink({
   return (
     <span className="flex flex-col justify-between items-center w-auto h-7">
       <p
-        className={cn({
-          " font-bold text-black": selected,
-          "text-warmGray-600": !selected,
-        })}
+        className={cn(
+          {
+            " font-bold text-black": selected,
+            "text-warmGray-600": !selected,
+          },
+          "hover:font-bold hover:text-black"
+        )}
       >
         {children}
       </p>

@@ -18,25 +18,21 @@ export const LINK_GROUPS: LinkGroup[] = [
       { name: "Desk", href: "" },
       { name: "Chair", href: "" },
       { name: "Sofa", href: "" },
-      { name: "Office", href: "" },
     ],
   },
   {
     name: "Hotel",
     group: [
-      { name: "Desk", href: "" },
-      { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "Hotel", href: "" },
+      { name: "Bed", href: "" },
+      { name: "Closet", href: "" },
     ],
   },
   {
     name: "School",
     group: [
+      { name: "Student Bed", href: "" },
       { name: "Desk", href: "" },
       { name: "Chair", href: "" },
-      { name: "Sofa", href: "" },
-      { name: "School", href: "" },
     ],
   },
 ];

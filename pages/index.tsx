@@ -13,7 +13,6 @@ import { CarouselButton } from "../components/buttons/CarouselButton";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import faker from "faker";
 import { range } from "lodash";
-import { Nav } from "../components/Header/Nav";
 import { Header } from "../components/Header";
 import HeroSection from "../components/Hero.section";
 import ProductsSection from "../components/Products.section";

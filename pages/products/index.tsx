@@ -1,11 +1,12 @@
 import React from "react";
-import { Filter } from "../components/Filter";
-import { Card } from "../components/Card";
+import { Filter } from "../../components/Filter";
+import { Card } from "../../components/Card";
 import { InferGetStaticPropsType } from "next";
+import { Header } from "../../components/Header";
 
 const cards = [1, 2, 3, 4, 5, 6];
 
-export default function products(
+export default function Products(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   return (
