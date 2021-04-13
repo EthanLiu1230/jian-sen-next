@@ -14,12 +14,12 @@ export default function Collection({
   return <div>page</div>;
 }
 
-interface Collection {
+interface ProductCollection {
   scene: string;
   categories: string[];
 }
 
-const COLLECTIONS: Collection[] = [
+const PRODUCT_COLLECTIONS: ProductCollection[] = [
   { scene: "hotel", categories: ["bed", "tea table"] },
   {
     scene: "office",
@@ -43,7 +43,9 @@ const COLLECTIONS: Collection[] = [
   },
 ];
 
-const generateSlugs = (collections: Collection[] = COLLECTIONS) => {
+const generateSlugs = (
+  collections: ProductCollection[] = PRODUCT_COLLECTIONS
+) => {
   const slugs: string[][] = [];
   collections.forEach((collection) => {
     collection.categories.forEach((category) => {
@@ -54,9 +56,11 @@ const generateSlugs = (collections: Collection[] = COLLECTIONS) => {
 };
 
 const generateItem = () => {
-  const _scene = faker.random.arrayElement(COLLECTIONS.map((c) => c.scene));
+  const _scene = faker.random.arrayElement(
+    PRODUCT_COLLECTIONS.map((c) => c.scene)
+  );
   const _category = faker.random.arrayElement(
-    COLLECTIONS.find((c) => c.scene === _scene).categories
+    PRODUCT_COLLECTIONS.find((c) => c.scene === _scene).categories
   );
   return {
     _id: faker.random.uuid(),
