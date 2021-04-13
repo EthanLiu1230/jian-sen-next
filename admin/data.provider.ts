@@ -19,7 +19,7 @@ import {
   UpdateParams,
   UpdateResult,
 } from "react-admin";
-import client from "../client/client";
+import client from "../client";
 import { Query } from "@feathersjs/feathers";
 
 export const dataProvider: DataProvider = {
