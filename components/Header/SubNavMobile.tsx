@@ -10,9 +10,8 @@ export default function SubNavMobile({
 }) {
   return (
     <div className="flex flex-nowrap text-sm">
-      {/*<p className="py-4 px-2 text-sm font-bold text-black">{linkGroup.name}</p>*/}
       <MainLink selected>
-        <p className="py-4 px-2">{linkGroup.name}</p>
+        <div className="py-4 px-2">{linkGroup.name}</div>
       </MainLink>
       <p className="py-4 px-2 font-bold text-warmGray-600">/</p>
       <nav className="flex p-4 space-x-6 w-full">

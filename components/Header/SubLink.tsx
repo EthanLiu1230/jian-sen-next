@@ -10,7 +10,7 @@ export default function SubLink({
 }) {
   return (
     <span className="flex flex-col justify-between items-center w-auto h-7">
-      <p
+      <span
         className={cn(
           {
             " font-bold text-black": selected,
@@ -20,7 +20,7 @@ export default function SubLink({
         )}
       >
         {children}
-      </p>
+      </span>
       {selected && (
         <svg
           width="5"

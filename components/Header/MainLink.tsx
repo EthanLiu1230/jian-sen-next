@@ -9,7 +9,7 @@ export default function MainLink({
   selected?: boolean;
 }) {
   return (
-    <p
+    <span
       className={cn(
         {
           "font-bold": selected,
@@ -20,6 +20,6 @@ export default function MainLink({
       )}
     >
       {children}
-    </p>
+    </span>
   );
 }
