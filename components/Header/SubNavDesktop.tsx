@@ -10,9 +10,9 @@ export default function SubNavDesktop({
   return (
     <nav className="flex p-4 space-x-6 w-full lg:space-x-10">
       {linkGroup.group.map((link, index) => (
-        <a key={index} href={link.href}>
-          <SubLink selected={link.name === "Desk"}>{link.name}</SubLink>
-        </a>
+        <SubLink key={index} href={link.href}>
+          {link.name}
+        </SubLink>
       ))}
     </nav>
   );

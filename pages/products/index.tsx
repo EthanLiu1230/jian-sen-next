@@ -3,7 +3,6 @@ import { Filter } from "../../components/Filter";
 import { Card } from "../../components/Card";
 import { InferGetStaticPropsType } from "next";
 import { Header } from "../../components/Header";
-import app from "../../client";
 
 const cards = [1, 2, 3, 4, 5, 6];
 

@@ -54,7 +54,7 @@ export default function NavDesktop({
         <nav className="flex space-x-10">
           {links.map((link, index) => (
             <a key={index} href={link.href}>
-              <MainLink>{link.name}</MainLink>
+              <MainLink href={link.href}>{link.name}</MainLink>
             </a>
           ))}
         </nav>

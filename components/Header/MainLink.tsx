@@ -1,15 +1,18 @@
 import React, { ReactNode } from "react";
 import cn from "classnames";
+import { useRouter } from "next/router";
 
 export default function MainLink({
   children,
-  selected = false,
+  href,
 }: {
   children: ReactNode;
-  selected?: boolean;
+  href: string;
 }) {
+  const router = useRouter();
+  const selected = router.pathname.includes(href);
   return (
-    <span
+    <a
       className={cn(
         {
           "font-bold": selected,
@@ -18,8 +21,9 @@ export default function MainLink({
         },
         "hover:text-primary hover:text-shadow"
       )}
+      onClick={() => router.push(href)}
     >
       {children}
-    </span>
+    </a>
   );
 }

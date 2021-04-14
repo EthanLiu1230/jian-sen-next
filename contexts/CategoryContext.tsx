@@ -1,9 +1,10 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import client from "../client";
 
-interface Category {
+export interface Category {
   id: number;
   name: string;
+  parentId?: number;
   children?: Category[];
 }
 
@@ -16,7 +17,7 @@ async function getRootCategories(): Promise<Category[]> {
 async function getCategoriesByParentId(parentId: number): Promise<Category[]> {
   const query = { parentId, level: 1 };
   const res = await client.service("categories").find({ query });
-  return res.data.map(({ id, name }) => ({ id, name }));
+  return res.data.map(({ id, name, parentId }) => ({ id, name, parentId }));
 }
 
 async function getTwoLevelCategories(): Promise<Category[]> {
@@ -30,7 +31,7 @@ async function getTwoLevelCategories(): Promise<Category[]> {
 }
 
 function useGetCategories() {
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState<Category[]>(null);
   useEffect(() => {
     getTwoLevelCategories().then((data) => setCategories(data));
   }, []);
@@ -40,7 +41,7 @@ function useGetCategories() {
 export const CategoryContext = React.createContext(null);
 
 export function CategoryContextProvider({ children }: { children: ReactNode }) {
-  const categories = useGetCategories();
+  const categories: Category[] = useGetCategories();
 
   return (
     <CategoryContext.Provider value={categories}>
