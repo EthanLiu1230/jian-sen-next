@@ -39,9 +39,7 @@ export default function NavDesktop({
           {linkGroups.map((group, index) => (
             <a key={group.name} href="">
               <div key={index} onMouseEnter={() => setShowGroup(group)}>
-                <MainLink selected={group.name === "Hotel"}>
-                  {group.name}
-                </MainLink>
+                <MainLink href={""}>{group.name}</MainLink>
               </div>
             </a>
           ))}
