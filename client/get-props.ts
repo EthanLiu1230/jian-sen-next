@@ -1,5 +1,5 @@
 import client from "./index";
-import { Link, LinkGroup } from "../components/Header/props.type";
+import { LinkGroup } from "../components/Header/props.type";
 
 export async function getLinkGroups(): Promise<LinkGroup[]> {
   // get root categories and their children, convert to LinkGroups
@@ -13,10 +13,10 @@ export async function getLinkGroups(): Promise<LinkGroup[]> {
   // return whole as LinkGroup[]
   return await Promise.all(
     scenes.map(async (scene) => {
+      // grab child categories and map to group
       const { data } = await client
         .service("categories")
         .find({ query: { parentId: scene.id } });
-
       const group = data.map(({ id, name }) => ({
         id,
         name,

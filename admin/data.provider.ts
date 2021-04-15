@@ -19,8 +19,8 @@ import {
   UpdateParams,
   UpdateResult,
 } from "react-admin";
-import app from "../client";
 import { Query } from "@feathersjs/feathers";
+import client from "../client";
 
 export const dataProvider: DataProvider = {
   async create<RecordType>(

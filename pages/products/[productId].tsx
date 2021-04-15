@@ -8,7 +8,6 @@ export default function productId() {
   return (
     //TODO: layout on resizing
     <div className="container py-4 px-4 pt-28">
-      <div>{JSON.stringify(router.pathname)}</div>
       <div className="grid grid-cols-1 justify-center sm:grid-cols-2">
         <div className="flex-auto max-w-xl">
           <ProductCarousel />
