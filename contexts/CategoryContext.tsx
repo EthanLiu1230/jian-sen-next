@@ -45,7 +45,6 @@ export function CategoryContextProvider({ children }: { children: ReactNode }) {
 
   return (
     <CategoryContext.Provider value={categories}>
-      <div>{JSON.stringify(categories)}</div>
       {children}
     </CategoryContext.Provider>
   );
