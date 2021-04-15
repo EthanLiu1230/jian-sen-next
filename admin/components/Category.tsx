@@ -1,9 +1,7 @@
 import {
   Create,
   Datagrid,
-  DateField,
   Edit,
-  EditButton,
   List,
   ReferenceField,
   ReferenceInput,
@@ -17,36 +15,20 @@ import React from "react";
 
 const CategoryFilter = (props) => (
   <Filter {...props}>
-    {/*<TextInput label={"Search"} source="$like" alwaysOn />*/}
-
-    {/*<ReferenceInput*/}
-    {/*  label="Parent Category"*/}
-    {/*  reference={"categories"}*/}
-    {/*  source={"parentId"}*/}
-    {/*>*/}
-    {/*  <SelectInput optionText={"name"} />*/}
-    {/*</ReferenceInput>*/}
-
     <TextInput source={"level"} />
   </Filter>
 );
 
 export const CategoryList = (props) => {
-  const basePath = "categories";
-
   return (
-    <List filters={<CategoryFilter />} {...props}>
-      <Datagrid>
+    <List filters={<CategoryFilter />} basePath={"categories"} {...props}>
+      <Datagrid rowClick="edit">
         <TextField source={"id"} />
         <TextField source={"name"} />
         <ReferenceField source={"parentId"} reference={"categories"}>
           <TextField source="name" />
         </ReferenceField>
         <TextField source={"level"} />
-        <DateField source={"createdAt"} />
-        <DateField source={"updatedAt"} />
-        <EditButton basePath={basePath} />
-        {/*<DeleteButton basePath={basePath} />*/}
       </Datagrid>
     </List>
   );

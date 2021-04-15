@@ -5,6 +5,7 @@ import { Box } from "../styles/Box";
 import { Link, LINK_GROUPS, LinkGroup, LINKS } from "./props.type";
 import MenuToggle from "../buttons/MenuToggle";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
+import SubLink from "./SubLink";
 
 function MobileNavPanel({
   linkGroups = LINK_GROUPS,
@@ -16,7 +17,7 @@ function MobileNavPanel({
   const [linkGroup, setLinkGroup] = useState<LinkGroup>(linkGroups[0]);
 
   return (
-    <div className="overflow-scroll px-4 w-full h-full divide-y no-scrollbar">
+    <div className="overflow-scroll px-4 w-full h-full divide-y no-scrollbar text-sm">
       <div className="flex flex-wrap py-10">
         {linkGroups.map((lg) => (
           <div key={lg.name} className="mr-4 mb-4">
@@ -25,24 +26,28 @@ function MobileNavPanel({
               onClick={() => setLinkGroup(lg)}
             >
               <Box variant={lg === linkGroup ? "filled" : "fill"}>
-                <p className="text-sm px-4 py-3">{lg.name}</p>
+                <p className="px-4 py-3">{lg.name}</p>
               </Box>
             </button>
           </div>
         ))}
       </div>
       <div className="py-10">
-        {linkGroup.group.map((l) => (
-          <a className="block mb-6 text-sm" href={l.href}>
-            {l.name}
-          </a>
+        {linkGroup.group.map((link) => (
+          // todo: subLink mobile style
+          // <a className="block mb-6 text-sm" href={l.href}>
+          //   {l.name}
+          // </a>
+          <SubLink name={link.name} href={link.href} />
         ))}
       </div>
       <div className="py-10">
         {links.map((link) => (
-          <a className="block mb-6 text-sm text-warmGray-600" href={link.href}>
-            {link.name}
-          </a>
+          // todo: subLink mobile style
+          // <a className="block mb-6 text-sm text-warmGray-600" href={link.href}>
+          //   {link.name}
+          // </a>
+          <SubLink name={link.name} href={link.href} />
         ))}
       </div>
     </div>

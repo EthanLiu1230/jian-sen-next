@@ -20,14 +20,16 @@ export async function getLinkGroups(): Promise<LinkGroup[]> {
       const group = data.map(({ id, name }) => ({
         id,
         name,
-        href: `${scene.name}/${name}`,
+        href: {
+          pathname: "/collections/[scene]/[category]",
+          query: { scene: scene.name, category: name },
+        },
       }));
-      console.log("group -> ", group);
       const linkGroup: LinkGroup = {
         id: scene.id,
         name: scene.name,
         group,
-        href: group.length ? group[0].href : "",
+        href: group.length ? group[0].href : { pathname: "/" },
       };
 
       return linkGroup;

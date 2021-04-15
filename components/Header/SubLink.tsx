@@ -2,18 +2,15 @@ import React, { ReactNode } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 
-export default function SubLink({
-  children,
-  href,
-}: {
-  children: ReactNode;
-  href: string;
-}) {
+export default function SubLink({ name, href }: { name: string; href: any }) {
   const router = useRouter();
-  const selected = router.pathname.includes(href);
+  const selected = router.asPath
+    .replace("%20", " ")
+    .toLowerCase()
+    .includes(name.toLowerCase());
   return (
     <a
-      className="flex flex-col justify-between items-center w-auto h-7"
+      className="flex flex-col justify-between items-center w-auto md:h-7 cursor-pointer"
       onClick={() => router.push(href)}
     >
       <span
@@ -25,7 +22,7 @@ export default function SubLink({
           "hover:font-bold hover:text-black"
         )}
       >
-        {children}
+        {name}
       </span>
       {selected && (
         <svg

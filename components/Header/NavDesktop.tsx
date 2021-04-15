@@ -37,11 +37,9 @@ export default function NavDesktop({
       <div className="flex justify-between items-center p-4 w-full">
         <nav className="flex space-x-10">
           {linkGroups.map((group, index) => (
-            <a key={group.name} href="">
-              <div key={index} onMouseEnter={() => setShowGroup(group)}>
-                <MainLink href={group.href} name={group.name} />
-              </div>
-            </a>
+            <div key={index} onMouseEnter={() => setShowGroup(group)}>
+              <MainLink href={group.href} name={group.name} />
+            </div>
           ))}
         </nav>
         <nav>
@@ -51,9 +49,9 @@ export default function NavDesktop({
         </nav>
         <nav className="flex space-x-10">
           {links.map((link, index) => (
-            <a key={index} href={link.href}>
+            <div key={index}>
               <MainLink href={link.href} name={link.name} />
-            </a>
+            </div>
           ))}
         </nav>
       </div>

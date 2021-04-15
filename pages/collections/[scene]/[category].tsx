@@ -1,22 +1,17 @@
 import React from "react";
-import { Filter } from "../../components/Filter";
-import { Card } from "../../components/Card";
-import {
-  GetStaticProps,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
-import { Header } from "../../components/Header";
-import { getLinkGroups } from "../../client/get-props";
+import { Filter } from "../../../components/Filter";
+import { Card } from "../../../components/Card";
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import { Header } from "../../../components/Header";
+import { getLinkGroups } from "../../../client/get-props";
+import { LinkGroup, LINKS } from "../../../components/Header/props.type";
 
 const cards = [1, 2, 3, 4, 5, 6];
 
-export default function Products({
-  header,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Products({ header }) {
   return (
     <>
-      <Header {...header} />
+      <Header {...header} links={LINKS} />
       <div className="container flex flex-col gap-6 py-4 px-4 pt-28 md:flex-row">
         <div className="md:w-1/3 lg:w-1/4">
           <h1 className="my-6 text-xl font-bold">Desk</h1>
@@ -53,5 +48,27 @@ export const getStaticProps: GetStaticProps = async (
     props: {
       header: { linkGroups },
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const linkGroups = await getLinkGroups();
+
+  const pathsOfOneGroup = (linkGroup: LinkGroup) => {
+    return linkGroup.group.map(({ name }) => ({
+      params: {
+        scene: linkGroup.name,
+        category: name,
+      },
+    }));
+  };
+  const paths = linkGroups.reduce((acc, cur) => {
+    return [...acc, ...pathsOfOneGroup(cur)];
+  }, []);
+  // const paths = pathsOfOneGroup(linkGroups[0]);
+
+  return {
+    paths,
+    fallback: false,
   };
 };

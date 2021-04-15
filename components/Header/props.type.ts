@@ -1,12 +1,12 @@
 export interface Link {
   id?: number;
   name: string;
-  href: string;
+  href: any;
 }
 
 export interface LinkGroup {
   id?: number;
-  href?: string;
+  href?: any;
   name: string;
   group: Link[];
 }
