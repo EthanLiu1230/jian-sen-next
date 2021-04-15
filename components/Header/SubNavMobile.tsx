@@ -10,9 +10,9 @@ export default function SubNavMobile({
 }) {
   return (
     <div className="flex flex-nowrap text-sm">
-      <MainLink selected>
-        <div className="py-4 px-2">{linkGroup.name}</div>
-      </MainLink>
+      <div className="py-4 px-2">
+        <MainLink name={linkGroup.name} href={linkGroup.href} />
+      </div>
       <p className="py-4 px-2 font-bold text-warmGray-600">/</p>
       <nav className="flex p-4 space-x-6 w-full">
         {linkGroup.group.map((link, index) => (

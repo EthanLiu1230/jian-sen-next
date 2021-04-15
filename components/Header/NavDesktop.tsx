@@ -39,7 +39,7 @@ export default function NavDesktop({
           {linkGroups.map((group, index) => (
             <a key={group.name} href="">
               <div key={index} onMouseEnter={() => setShowGroup(group)}>
-                <MainLink href={""}>{group.name}</MainLink>
+                <MainLink href={group.href} name={group.name} />
               </div>
             </a>
           ))}
@@ -52,7 +52,7 @@ export default function NavDesktop({
         <nav className="flex space-x-10">
           {links.map((link, index) => (
             <a key={index} href={link.href}>
-              <MainLink href={link.href}>{link.name}</MainLink>
+              <MainLink href={link.href} name={link.name} />
             </a>
           ))}
         </nav>

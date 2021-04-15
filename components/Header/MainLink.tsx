@@ -3,14 +3,14 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 
 export default function MainLink({
-  children,
+  name,
   href,
 }: {
-  children: ReactNode;
+  name: string;
   href: string;
 }) {
   const router = useRouter();
-  const selected = router.pathname.includes(href);
+  const selected = router.pathname.includes(name);
   return (
     <a
       className={cn(
@@ -23,7 +23,7 @@ export default function MainLink({
       )}
       onClick={() => router.push(href)}
     >
-      {children}
+      {name}
     </a>
   );
 }

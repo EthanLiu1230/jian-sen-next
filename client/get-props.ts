@@ -22,11 +22,12 @@ export async function getLinkGroups(): Promise<LinkGroup[]> {
         name,
         href: `${scene.name}/${name}`,
       }));
-
+      console.log("group -> ", group);
       const linkGroup: LinkGroup = {
         id: scene.id,
         name: scene.name,
         group,
+        href: group.length ? group[0].href : "",
       };
 
       return linkGroup;
