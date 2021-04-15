@@ -47,3 +47,16 @@ export const PRODUCTS: {
   { Icon: IconHotel, text: "hotel", href: "#", image: "/images/hold_4.jpg" },
   { Icon: IconSchool, text: "school", href: "#", image: "/images/hold_5.jpg" },
 ];
+
+export const defaultImages: string[] = [
+  "/images/hold_0.jpg",
+  "/images/hold_1.jpg",
+  "/images/hold_3.jpg",
+  "/images/hold_4.jpg",
+  "/images/hold_5.jpg",
+];
+
+export const defaultQualification = defaultImages.map((img, i) => ({
+  image: img,
+  text: `qualification ${i}`,
+}));

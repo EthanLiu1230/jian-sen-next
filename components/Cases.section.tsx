@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { circulateIndex } from "./data/utils";
+import { circulateIndex } from "./carousel/utils";
 import {
   CarouselIndicator,
   CarouselIndicatorGroup,

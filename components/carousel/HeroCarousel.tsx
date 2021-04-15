@@ -1,10 +1,7 @@
-import { defaultImages } from "../data/default-data";
 import React, { useState } from "react";
-import { circulateIndex } from "../data/utils";
-import {
-  CarouselIndicator,
-  CarouselIndicatorGroup,
-} from "./CarouselIndicator";
+import { circulateIndex } from "./utils";
+import { CarouselIndicator, CarouselIndicatorGroup } from "./CarouselIndicator";
+import { defaultImages } from "../../DUMMY";
 
 export function HeroCarousel({ images = defaultImages }: { images: string[] }) {
   const [cur, setCur] = useState(0);

@@ -4,7 +4,7 @@ import { Box } from "../components/styles/Box";
 import { HeroCarousel } from "../components/carousel/HeroCarousel";
 import { PRODUCTS } from "../DUMMY";
 import { IconSofa } from "../public/product-icons/IconSofa";
-import { circulateIndex } from "../components/data/utils";
+import { circulateIndex } from "../components/carousel/utils";
 import {
   CarouselIndicator,
   CarouselIndicatorGroup,
@@ -17,18 +17,19 @@ import { Header } from "../components/Header";
 import HeroSection from "../components/Hero.section";
 import ProductsSection from "../components/Products.section";
 import CasesSection from "../components/Cases.section";
+import { getLinkGroups } from "../client/get-props";
 
 export default function HomePage({
   hero,
   cases,
+  header,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      <Header />
+      <Header linkGroups={header.linkGroups} />
       <div className="pt-16 space-y-32">
         <HeroSection content={hero} />
         <ProductsSection />
-        {/*<CasesSection cases={cases} />*/}
       </div>
     </div>
   );
@@ -52,8 +53,13 @@ const generateArticle = (): Article => {
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   // ...
+  const linkGroups = await getLinkGroups();
+
   return {
     props: {
+      header: {
+        linkGroups,
+      },
       hero: generateArticle(),
       cases: range(faker.random.number({ min: 3, max: 6 })).map(() =>
         generateArticle()
