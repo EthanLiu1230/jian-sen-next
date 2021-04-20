@@ -17,24 +17,27 @@ import {
   TextField,
   TextInput,
 } from "react-admin";
+import { log } from "util";
 
-const UploadImageField = ({
-  source,
+const MyImageField = ({
+  source = "url",
   record = {},
   host = "http://localhost:3030",
   label = "image",
 }: {
-  source: string;
+  source?: string;
   record?: {};
   host?: string;
   label?: string;
 }) => {
   return (
-    <img
-      style={{ height: 100 }}
-      src={`${host}/${record[source]}`}
-      alt={label}
-    />
+    <>
+      <img
+        style={{ height: 100 }}
+        src={`${host}/${record[source]}`}
+        alt={label}
+      />
+    </>
   );
 };
 
@@ -42,7 +45,7 @@ export const UploadList = (props) => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      <UploadImageField source={"url"} />
+      <MyImageField />
     </Datagrid>
   </List>
 );
@@ -51,8 +54,10 @@ export const UploadEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="id" disabled />
+      <MyImageField />
+
       <ImageInput source="file">
-        <ImageInput source="url" />
+        <ImageField source="preview" />
       </ImageInput>
     </SimpleForm>
   </Edit>
