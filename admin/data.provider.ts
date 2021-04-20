@@ -21,21 +21,21 @@ import {
 } from "react-admin";
 import { Query } from "@feathersjs/feathers";
 import client from "../client";
-import { createFile } from "./file-crud";
+import { postFile, putFile } from "./file-crud";
 
 export const dataProvider: DataProvider = {
   async create<RecordType>(
     resource: string,
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
+    let res;
     if (resource === "uploads") {
-      // params.data.file = params.data.file.rawFile;
-      console.log("params -> ", params);
-      const createFileRes = await createFile(params.data.file.rawFile);
-      console.log("createFileRes -> ", createFileRes);
+      const file: File = params.data.file.rawFile;
+      res = await postFile(file);
+      return { data: res };
     }
 
-    const res = await client.service(resource).create(params.data);
+    res = await client.service(resource).create(params.data);
     return { data: res };
   },
 
@@ -108,11 +108,18 @@ export const dataProvider: DataProvider = {
     params: UpdateParams
   ): Promise<UpdateResult<RecordType>> {
     const { id, data } = params;
-    const res = await client.service(resource).update(id, data);
+    let res;
+    if (resource === "uploads") {
+      const file: File = params.data.file.rawFile;
+      res = await putFile(+id, file);
+      return { data: res };
+    }
+
+    res = await client.service(resource).update(id, data);
     return { data: res };
   },
 
-  // todo
+  // todo: omit for now
   updateMany(
     resource: string,
     params: UpdateManyParams

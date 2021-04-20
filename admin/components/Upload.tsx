@@ -51,7 +51,9 @@ export const UploadEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="id" disabled />
-      <ImageInput source="file" />
+      <ImageInput source="file">
+        <ImageInput source="url" />
+      </ImageInput>
     </SimpleForm>
   </Edit>
 );
@@ -59,10 +61,9 @@ export const UploadCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
       <ImageInput source="file">
+        {/* ImageFiled will always preview, we are just providing keys here */}
         <ImageField source="preview" />
       </ImageInput>
     </SimpleForm>
   </Create>
 );
-
-const MyImageInput = (props) => {};
