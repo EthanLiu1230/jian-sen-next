@@ -21,12 +21,20 @@ import {
 } from "react-admin";
 import { Query } from "@feathersjs/feathers";
 import client from "../client";
+import { createFile } from "./file-crud";
 
 export const dataProvider: DataProvider = {
   async create<RecordType>(
     resource: string,
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
+    if (resource === "uploads") {
+      // params.data.file = params.data.file.rawFile;
+      console.log("params -> ", params);
+      const createFileRes = await createFile(params.data.file.rawFile);
+      console.log("createFileRes -> ", createFileRes);
+    }
+
     const res = await client.service(resource).create(params.data);
     return { data: res };
   },

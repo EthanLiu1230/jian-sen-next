@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Create,
   Datagrid,
   DateField,
   DeleteButton,
@@ -7,6 +8,7 @@ import {
   EditButton,
   FileField,
   ImageField,
+  ImageInput,
   List,
   ReferenceField,
   ReferenceInput,
@@ -49,8 +51,18 @@ export const UploadEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="id" disabled />
-      <TextInput source="path" />
-      <TextInput source="url" disabled />
+      <ImageInput source="file" />
     </SimpleForm>
   </Edit>
 );
+export const UploadCreate = (props) => (
+  <Create {...props}>
+    <SimpleForm>
+      <ImageInput source="file">
+        <ImageField source="preview" />
+      </ImageInput>
+    </SimpleForm>
+  </Create>
+);
+
+const MyImageInput = (props) => {};
