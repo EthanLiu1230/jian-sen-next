@@ -20,10 +20,10 @@ import {
   UpdateResult,
 } from "react-admin";
 import { Query } from "@feathersjs/feathers";
-import client from "../client";
-import { postFile, putFile } from "./file-crud";
+import client from "../../client";
+import { postFile, patchFile } from "../utils/file-crud";
 
-export const dataProvider: DataProvider = {
+const dataProvider: DataProvider = {
   async create<RecordType>(
     resource: string,
     params: CreateParams
@@ -111,7 +111,7 @@ export const dataProvider: DataProvider = {
     let res;
     if (resource === "uploads") {
       const file: File = params.data.file.rawFile;
-      res = await putFile(+id, file);
+      res = await patchFile(+id, file);
       return { data: res };
     }
 
@@ -119,7 +119,7 @@ export const dataProvider: DataProvider = {
     return { data: res };
   },
 
-  // todo: omit for now
+  // omitted
   updateMany(
     resource: string,
     params: UpdateManyParams
@@ -149,3 +149,5 @@ export const dataProvider: DataProvider = {
     return { data: res };
   },
 };
+
+export default dataProvider;

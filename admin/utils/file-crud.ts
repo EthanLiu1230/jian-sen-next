@@ -8,11 +8,11 @@ export const postFile = (file: File) => {
   }).then((res) => res.json());
 };
 
-export const putFile = (id: number, file: File) => {
+export const patchFile = (id: number, file: File) => {
   const formData = new FormData();
   formData.append("file", file, file.name);
   return fetch(`http://localhost:3030/uploads/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     body: formData,
     redirect: "follow",
   }).then((res) => res.json());

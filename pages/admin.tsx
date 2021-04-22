@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-const ReactAdmin = dynamic(() => import("../admin/components/ReactAdmin"), {
+const ReactAdmin = dynamic(() => import("../admin/ReactAdmin"), {
   ssr: false,
 });
 
