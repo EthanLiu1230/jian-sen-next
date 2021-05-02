@@ -3,7 +3,7 @@ import { Filter } from "../../../components/Filter";
 import { Card } from "../../../components/Card";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { Header } from "../../../components/Header";
-import { getLinkGroups } from "../../../client/get-props";
+import { getLinkGroups } from "../../../client/feathers/get-props";
 import { LinkGroup, LINKS } from "../../../components/Header/props.type";
 
 const cards = [1, 2, 3, 4, 5, 6];

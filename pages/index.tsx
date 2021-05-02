@@ -10,13 +10,9 @@ import { range } from "lodash";
 import { Header } from "../components/Header";
 import HeroSection from "../components/Hero.section";
 import ProductsSection from "../components/Products.section";
-import { getLinkGroups } from "../client/get-props";
+import { getLinkGroups } from "../client/spraypaint/props-provider";
 
-export default function HomePage({
-  hero,
-  cases,
-  header,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function HomePage({ hero, cases, header }) {
   return (
     <div>
       <Header {...header} />
@@ -44,9 +40,7 @@ const generateArticle = (): Article => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async (
-  context: GetStaticPropsContext
-) => {
+export const getStaticProps: GetStaticProps = async () => {
   // ...
   const linkGroups = await getLinkGroups();
 

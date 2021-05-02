@@ -1,5 +1,5 @@
 import client from "./index";
-import { LinkGroup } from "../components/Header/props.type";
+import { LinkGroup } from "../../components/Header/props.type";
 
 export async function getLinkGroups(): Promise<LinkGroup[]> {
   // get root categories and their children, convert to LinkGroups

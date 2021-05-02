@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { Query } from "@feathersjs/feathers";
-import client from "../client";
+import client from "../client/feathers";
 
 const fetcher = async (resource: string, query: Query) => {
   const res = await client.service(resource).find({ query });

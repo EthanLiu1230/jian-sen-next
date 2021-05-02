@@ -6,7 +6,7 @@ import {
   Resource,
 } from "react-admin";
 import React from "react";
-import dataProvider from "./providers/data.provider";
+import dataProvider from "../client/feathers/providers/data.provider";
 import category from "./category";
 
 const ReactAdmin = () => (

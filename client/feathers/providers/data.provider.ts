@@ -20,8 +20,8 @@ import {
   UpdateResult,
 } from "react-admin";
 import { Query } from "@feathersjs/feathers";
-import client from "../../client";
-import { postFile, patchFile } from "../utils/file-crud";
+import client from "../index";
+import { postFile, patchFile } from "../../../admin/utils/file-crud";
 
 const dataProvider: DataProvider = {
   async create<RecordType>(
