@@ -8,7 +8,7 @@ export interface LinkGroup {
   id?: number;
   href?: any;
   name: string;
-  group: Link[];
+  links: Link[];
 }
 
 /**
@@ -17,7 +17,7 @@ export interface LinkGroup {
 export const LINK_GROUPS: LinkGroup[] = [
   {
     name: "Office",
-    group: [
+    links: [
       { name: "Desk", href: "" },
       { name: "Chair", href: "" },
       { name: "Sofa", href: "" },
@@ -25,14 +25,14 @@ export const LINK_GROUPS: LinkGroup[] = [
   },
   {
     name: "Hotel",
-    group: [
+    links: [
       { name: "Bed", href: "" },
       { name: "Closet", href: "" },
     ],
   },
   {
     name: "School",
-    group: [
+    links: [
       { name: "Student Bed", href: "" },
       { name: "Desk", href: "" },
       { name: "Chair", href: "" },

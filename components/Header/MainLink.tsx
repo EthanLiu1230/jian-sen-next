@@ -14,7 +14,6 @@ export default function MainLink({ name, href }: { name: string; href: any }) {
       className={cn(
         {
           "font-bold": selected,
-          // "text-shadow": selected,
           "text-primary": selected,
         },
         "hover:text-primary hover:text-shadow",

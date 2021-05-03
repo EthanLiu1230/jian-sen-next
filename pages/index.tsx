@@ -1,16 +1,12 @@
 import React from "react";
 
-import {
-  GetStaticProps,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticProps } from "next";
 import faker from "faker";
 import { range } from "lodash";
+import { getLinkGroups } from "../client/spraypaint/props.provider";
 import { Header } from "../components/Header";
 import HeroSection from "../components/Hero.section";
 import ProductsSection from "../components/Products.section";
-import { getLinkGroups } from "../client/spraypaint/props-provider";
 
 export default function HomePage({ hero, cases, header }) {
   return (

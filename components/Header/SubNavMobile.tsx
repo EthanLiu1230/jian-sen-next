@@ -15,7 +15,7 @@ export default function SubNavMobile({
       </div>
       <p className="py-4 px-2 font-bold text-warmGray-600">/</p>
       <nav className="flex p-4 space-x-6 w-full">
-        {linkGroup.group.map((link, index) => (
+        {linkGroup.links.map((link, index) => (
           <div key={index}>
             <SubLink href={link.href} name={link.name} />
           </div>

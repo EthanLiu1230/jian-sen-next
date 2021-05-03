@@ -3,7 +3,7 @@ import { Filter } from "../../../components/Filter";
 import { Card } from "../../../components/Card";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { Header } from "../../../components/Header";
-import { getLinkGroups } from "../../../client/feathers/get-props";
+import { getLinkGroups } from "../../../client/feathers/props.provider";
 import { LinkGroup, LINKS } from "../../../components/Header/props.type";
 
 const cards = [1, 2, 3, 4, 5, 6];
@@ -55,17 +55,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const linkGroups = await getLinkGroups();
 
   const pathsOfOneGroup = (linkGroup: LinkGroup) => {
-    return linkGroup.group.map(({ name }) => ({
+    return linkGroup.links.map(({ name }) => ({
       params: {
         scene: linkGroup.name,
         category: name,
       },
     }));
   };
+
   const paths = linkGroups.reduce((acc, cur) => {
     return [...acc, ...pathsOfOneGroup(cur)];
   }, []);
-  // const paths = pathsOfOneGroup(linkGroups[0]);
 
   return {
     paths,

@@ -33,7 +33,7 @@ function MobileNavPanel({
         ))}
       </div>
       <div className="py-10">
-        {linkGroup.group.map((link) => (
+        {linkGroup.links.map((link) => (
           // todo: subLink mobile style
           // <a className="block mb-6 text-sm" href={l.href}>
           //   {l.name}

@@ -20,8 +20,8 @@ import {
   UpdateResult,
 } from "react-admin";
 import { Query } from "@feathersjs/feathers";
-import client from "../index";
-import { postFile, patchFile } from "../../../admin/utils/file-crud";
+import app from "./setup";
+import { postFile, patchFile } from "../../admin/utils/file-crud";
 
 const dataProvider: DataProvider = {
   async create<RecordType>(
@@ -35,7 +35,7 @@ const dataProvider: DataProvider = {
       return { data: res };
     }
 
-    res = await client.service(resource).create(params.data);
+    res = await app.service(resource).create(params.data);
     return { data: res };
   },
 
@@ -66,7 +66,7 @@ const dataProvider: DataProvider = {
 
       ...filter,
     };
-    return await client.service(resource).find({ query });
+    return await app.service(resource).find({ query });
   },
 
   getMany<RecordType>(
@@ -81,7 +81,7 @@ const dataProvider: DataProvider = {
       },
     };
 
-    return client.service(resource).find({ query });
+    return app.service(resource).find({ query });
   },
 
   // todo
@@ -99,7 +99,7 @@ const dataProvider: DataProvider = {
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
-    const res = await client.service(resource).get(params.id);
+    const res = await app.service(resource).get(params.id);
     return { data: res };
   },
 
@@ -115,7 +115,7 @@ const dataProvider: DataProvider = {
       return { data: res };
     }
 
-    res = await client.service(resource).update(id, data);
+    res = await app.service(resource).update(id, data);
     return { data: res };
   },
 
@@ -131,7 +131,7 @@ const dataProvider: DataProvider = {
     resource: string,
     params: DeleteParams
   ): Promise<DeleteResult<RecordType>> {
-    const res = await client.service(resource).remove(params.id);
+    const res = await app.service(resource).remove(params.id);
     return { data: res };
   },
 
@@ -145,7 +145,7 @@ const dataProvider: DataProvider = {
         $in: ids,
       },
     };
-    const res = await client.service(resource).remove(null, { query });
+    const res = await app.service(resource).remove(null, { query });
     return { data: res };
   },
 };

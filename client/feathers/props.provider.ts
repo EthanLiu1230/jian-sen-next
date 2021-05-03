@@ -1,9 +1,9 @@
-import client from "./index";
+import app from "./setup";
 import { LinkGroup } from "../../components/Header/props.type";
 
 export async function getLinkGroups(): Promise<LinkGroup[]> {
   // get root categories and their children, convert to LinkGroups
-  let { data } = await client
+  let { data } = await app
     .service("categories")
     .find({ query: { parentId: "null" } });
 
@@ -14,10 +14,10 @@ export async function getLinkGroups(): Promise<LinkGroup[]> {
   return await Promise.all(
     scenes.map(async (scene) => {
       // grab child categories and map to group
-      const { data } = await client
+      const { data } = await app
         .service("categories")
         .find({ query: { parentId: scene.id } });
-      const group = data.map(({ id, name }) => ({
+      const links = data.map(({ id, name }) => ({
         id,
         name,
         href: {
@@ -28,8 +28,8 @@ export async function getLinkGroups(): Promise<LinkGroup[]> {
       const linkGroup: LinkGroup = {
         id: scene.id,
         name: scene.name,
-        group,
-        href: group.length ? group[0].href : { pathname: "/" },
+        links: links,
+        href: links.length ? links[0].href : { pathname: "/" },
       };
 
       return linkGroup;
