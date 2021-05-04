@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import {
   CreateParams,
   CreateResult,
@@ -19,6 +20,39 @@ import {
   UpdateParams,
   UpdateResult,
 } from "react-admin";
+import { fetcher } from "./utils";
+
+function reactAdminParamsToGraphitiQuery(params: GetListParams) {
+  const { sort, filter, pagination } = params;
+
+  const statsParam = `stats[total]=count`;
+
+  let query = "?" + statsParam;
+
+  if (!isEmpty(sort)) {
+    const sortParam = `sort=${() => (sort.order === "ASC" ? "" : "-")}${
+      sort.field
+    }`;
+    query = [query, sortParam].join("&");
+  }
+
+  if (!isEmpty(filter)) {
+    const filterParams = filter.entries.map(
+      ([key, value]) => `filter[${key}]=${value}`
+    );
+    query = [query, ...filterParams].join("&");
+  }
+
+  if (!isEmpty(pagination)) {
+    const pageParams = [
+      `page[size]=${pagination.perPage}`,
+      `page[number]=${pagination.page}`,
+    ];
+    query = [query, ...pageParams].join("&");
+  }
+
+  return query;
+}
 
 const dataProvider: DataProvider = {
   create<RecordType>(
@@ -39,11 +73,23 @@ const dataProvider: DataProvider = {
   ): Promise<DeleteManyResult> {
     return Promise.resolve(undefined);
   },
-  getList<RecordType>(
+  async getList<RecordType>(
     resource: string,
     params: GetListParams
   ): Promise<GetListResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const query = reactAdminParamsToGraphitiQuery(params);
+
+    const response = await fetcher(resource, query, { method: "GET" });
+
+    const result: GetListResult<RecordType> = {
+      total: response.meta.stats.total.count,
+      data: [],
+    };
+    result.data = response.data.map(({ id, attributes }) => ({
+      id: +id,
+      ...attributes,
+    }));
+    return result;
   },
   getMany<RecordType>(
     resource: string,
@@ -61,6 +107,8 @@ const dataProvider: DataProvider = {
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
+    const { id } = params;
+
     return Promise.resolve(undefined);
   },
   update<RecordType>(
@@ -76,3 +124,4 @@ const dataProvider: DataProvider = {
     return Promise.resolve(undefined);
   },
 };
+export default dataProvider;

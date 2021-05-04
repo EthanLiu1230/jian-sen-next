@@ -6,7 +6,7 @@ import {
   Resource,
 } from "react-admin";
 import React from "react";
-import dataProvider from "../client/spraypaint/data.provider";
+import dataProvider from "../client/graphiti/data.provider";
 import category from "./category";
 
 const ReactAdmin = () => (

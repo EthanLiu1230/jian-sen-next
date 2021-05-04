@@ -1,20 +1,14 @@
 import { Link, LinkGroup } from "../../components/Header/props.type";
-
-const url = (baseUrl = "http://localhost:3000", apiNamespace = "/api/v1") => (
-  query: string
-) => `${baseUrl}${apiNamespace}${query}`;
+import { configUrl, fetcher } from "./utils";
 
 export const getLinkGroups = async (): Promise<LinkGroup[]> => {
-  const myUrl = url();
-  const res = await fetch(
-    myUrl("/categories?filter[parent_id]=null&include=children"),
-    {
-      method: "GET",
-      redirect: "follow",
-    }
-  ).then((res) => res.json());
+  const response = await fetcher(
+    "categories",
+    "?filter[parent_id]=null&include=children",
+    { method: "GET" }
+  );
 
-  const { data, included } = res;
+  const { data, included } = response;
 
   const genHref = (scene: string, category: string) => ({
     pathname: "/collections/[scene]/[category]",
