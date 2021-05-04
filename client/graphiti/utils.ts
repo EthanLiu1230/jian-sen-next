@@ -8,18 +8,18 @@ export const configUrl = (
  * 'categories'
  * @param query
  * '?stats[total]=count'
- * @param options
+ * @param init
  * {method: 'GET'}
  */
 export const fetcher = async (
   resource: string,
   query: string,
-  options: { method: string }
+  init: RequestInit
 ) => {
   const baseUrl = "http://localhost:3000";
   const apiNamespace = "/api/v1";
   return await fetch(
     `${baseUrl}${apiNamespace}/${resource}${query}`,
-    options
+    init
   ).then((res) => res.json());
 };

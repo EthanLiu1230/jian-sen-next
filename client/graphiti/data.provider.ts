@@ -58,11 +58,24 @@ const parseRecord = ({ id, attributes }) => ({
 });
 
 const dataProvider: DataProvider = {
-  create<RecordType>(
+  async create<RecordType>(
     resource: string,
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const { data } = params;
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const response = await fetcher(resource, "", {
+      method: "POST",
+      body: JSON.stringify({
+        data: {
+          type: resource,
+          attributes: data,
+        },
+      }),
+      headers,
+    });
+    return { data: parseRecord(response) };
   },
   delete<RecordType>(
     resource: string,
