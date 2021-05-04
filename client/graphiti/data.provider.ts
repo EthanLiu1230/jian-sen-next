@@ -22,12 +22,10 @@ import {
 } from "react-admin";
 import { fetcher } from "./utils";
 
-function reactAdminParamsToGraphitiQuery(params: GetListParams) {
+function getListParamsToQuery(params: GetListParams): string {
   const { sort, filter, pagination } = params;
 
-  const statsParam = `stats[total]=count`;
-
-  let query = "?" + statsParam;
+  let query = `stats[total]=count`;
 
   if (!isEmpty(sort)) {
     const sortParam = `sort=${() => (sort.order === "ASC" ? "" : "-")}${
@@ -54,6 +52,11 @@ function reactAdminParamsToGraphitiQuery(params: GetListParams) {
   return query;
 }
 
+const parseRecord = ({ id, attributes }) => ({
+  id: +id,
+  ...attributes,
+});
+
 const dataProvider: DataProvider = {
   create<RecordType>(
     resource: string,
@@ -77,39 +80,46 @@ const dataProvider: DataProvider = {
     resource: string,
     params: GetListParams
   ): Promise<GetListResult<RecordType>> {
-    const query = reactAdminParamsToGraphitiQuery(params);
+    const query = getListParamsToQuery(params);
 
-    const response = await fetcher(resource, query, { method: "GET" });
+    const response = await fetcher(resource, `?${query}`, { method: "GET" });
 
-    const result: GetListResult<RecordType> = {
+    return {
       total: response.meta.stats.total.count,
-      data: [],
+      data: response.data.map(parseRecord),
     };
-    result.data = response.data.map(({ id, attributes }) => ({
-      id: +id,
-      ...attributes,
-    }));
-    return result;
   },
-  getMany<RecordType>(
+  async getMany<RecordType>(
     resource: string,
     params: GetManyParams
   ): Promise<GetManyResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const { ids } = params;
+    const records = await Promise.all(
+      ids.map((id) =>
+        fetcher(resource, `/${id}`, { method: "GET" }).then(parseRecord)
+      )
+    );
+    return { data: records };
   },
   getManyReference<RecordType>(
     resource: string,
     params: GetManyReferenceParams
   ): Promise<GetManyReferenceResult<RecordType>> {
-    return Promise.resolve(undefined);
+    // return Promise.resolve(undefined);
+    const { target, id, ...getListParams } = params;
+    let query = getListParamsToQuery(getListParams);
+    query = [query, `filter[${target}]=${id}`].join("&");
   },
-  getOne<RecordType>(
+
+  async getOne<RecordType>(
     resource: string,
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
     const { id } = params;
-
-    return Promise.resolve(undefined);
+    const record = await fetcher(resource, `/${id}`, { method: "GET" }).then(
+      parseRecord
+    );
+    return { data: record };
   },
   update<RecordType>(
     resource: string,
