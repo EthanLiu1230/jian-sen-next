@@ -14,10 +14,9 @@ const CategoryList = (props) => {
       <Datagrid>
         <TextField source={"id"} />
         <TextField source={"name"} />
-        {/*<ReferenceField source={"parentId"} reference={"categories"}>*/}
-        {/*  <TextField source="name" />*/}
-        {/*</ReferenceField>*/}
-        {/*<TextField source={"level"} />*/}
+        <ReferenceField source={"parent_id"} reference={"categories"}>
+          <TextField source="name" />
+        </ReferenceField>
         <EditButton />
       </Datagrid>
     </List>

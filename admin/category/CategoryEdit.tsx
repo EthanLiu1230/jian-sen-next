@@ -1,4 +1,10 @@
-import { Edit, SimpleForm, TextInput } from "react-admin";
+import {
+  Edit,
+  ReferenceInput,
+  SelectInput,
+  SimpleForm,
+  TextInput,
+} from "react-admin";
 import React from "react";
 
 const CategoryEdit = (props) => {
@@ -7,9 +13,9 @@ const CategoryEdit = (props) => {
       <SimpleForm>
         <TextInput source={"id"} disabled />
         <TextInput source={"name"} />
-        {/*<ReferenceInput source="parentId" reference="categories" allowEmpty>*/}
-        {/*  <SelectInput optionText="name" />*/}
-        {/*</ReferenceInput>*/}
+        <ReferenceInput source="parent_id" reference="categories" allowEmpty>
+          <SelectInput optionText="name" />
+        </ReferenceInput>
       </SimpleForm>
     </Edit>
   );

@@ -1,4 +1,3 @@
-import { isEmpty } from "lodash";
 import {
   CreateParams,
   CreateResult,
@@ -20,42 +19,7 @@ import {
   UpdateParams,
   UpdateResult,
 } from "react-admin";
-import { fetcher } from "./utils";
-
-function getListParamsToQuery(params: GetListParams): string {
-  const { sort, filter, pagination } = params;
-
-  let query = `stats[total]=count`;
-
-  if (!isEmpty(sort)) {
-    const sortParam = `sort=${() => (sort.order === "ASC" ? "" : "-")}${
-      sort.field
-    }`;
-    query = [query, sortParam].join("&");
-  }
-
-  if (!isEmpty(filter)) {
-    const filterParams = filter.entries.map(
-      ([key, value]) => `filter[${key}]=${value}`
-    );
-    query = [query, ...filterParams].join("&");
-  }
-
-  if (!isEmpty(pagination)) {
-    const pageParams = [
-      `page[size]=${pagination.perPage}`,
-      `page[number]=${pagination.page}`,
-    ];
-    query = [query, ...pageParams].join("&");
-  }
-
-  return query;
-}
-
-const parseRecord = ({ id, attributes }) => ({
-  id: +id,
-  ...attributes,
-});
+import { fetcher, getListParamsToQuery, parseRecord } from "./utils";
 
 const dataProvider: DataProvider = {
   async create<RecordType>(
@@ -63,8 +27,6 @@ const dataProvider: DataProvider = {
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
     const { data } = params;
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
     const response = await fetcher(resource, "", {
       method: "POST",
       body: JSON.stringify({
@@ -73,22 +35,91 @@ const dataProvider: DataProvider = {
           attributes: data,
         },
       }),
-      headers,
+      headers: (() => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        return headers;
+      })(),
     });
     return { data: parseRecord(response) };
   },
-  delete<RecordType>(
+
+  async delete<RecordType>(
     resource: string,
     params: DeleteParams
   ): Promise<DeleteResult<RecordType>> {
-    return Promise.resolve(undefined);
+    const { id } = params;
+    const record = await fetcher(resource, `/${id}`, { method: "DELETE" }).then(
+      parseRecord
+    );
+    return { data: record };
   },
-  deleteMany(
+
+  async deleteMany(
     resource: string,
     params: DeleteManyParams
   ): Promise<DeleteManyResult> {
-    return Promise.resolve(undefined);
+    const { ids } = params;
+    const records = await Promise.all(
+      ids.map((id) =>
+        fetcher(resource, `/${id}`, { method: "DELETE" }).then(parseRecord)
+      )
+    );
+    return { data: records };
   },
+
+  async update<RecordType>(
+    resource: string,
+    params: UpdateParams
+  ): Promise<UpdateResult<RecordType>> {
+    const { data, id } = params;
+
+    const { created_at, updated_at, ...attributes } = data;
+    const response = await fetcher(resource, `/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        data: {
+          id,
+          type: resource,
+          attributes,
+        },
+      }),
+      headers: (() => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        return headers;
+      })(),
+    });
+    return { data: parseRecord(response) };
+  },
+
+  async updateMany(
+    resource: string,
+    params: UpdateManyParams
+  ): Promise<UpdateManyResult> {
+    const { data, ids } = params;
+    const records = await Promise.all(
+      ids.map((id) =>
+        fetcher(resource, `/${id}`, {
+          method: "PATCH",
+          headers: (() => {
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+            return headers;
+          })(),
+          body: JSON.stringify({
+            data: {
+              id,
+              type: resource,
+              attributes: data,
+            },
+          }),
+        }).then(parseRecord)
+      )
+    );
+    return { data: records };
+  },
+
   async getList<RecordType>(
     resource: string,
     params: GetListParams
@@ -102,6 +133,7 @@ const dataProvider: DataProvider = {
       data: response.data.map(parseRecord),
     };
   },
+
   async getMany<RecordType>(
     resource: string,
     params: GetManyParams
@@ -114,6 +146,7 @@ const dataProvider: DataProvider = {
     );
     return { data: records };
   },
+
   async getManyReference<RecordType>(
     resource: string,
     params: GetManyReferenceParams
@@ -138,18 +171,6 @@ const dataProvider: DataProvider = {
       parseRecord
     );
     return { data: record };
-  },
-  update<RecordType>(
-    resource: string,
-    params: UpdateParams
-  ): Promise<UpdateResult<RecordType>> {
-    return Promise.resolve(undefined);
-  },
-  updateMany(
-    resource: string,
-    params: UpdateManyParams
-  ): Promise<UpdateManyResult> {
-    return Promise.resolve(undefined);
   },
 };
 export default dataProvider;

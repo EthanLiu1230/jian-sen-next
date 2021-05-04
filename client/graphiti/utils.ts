@@ -1,7 +1,5 @@
-export const configUrl = (
-  baseUrl = "http://localhost:3000",
-  apiNamespace = "/api/v1"
-) => (api: string) => `${baseUrl}${apiNamespace}${api}`;
+import { isEmpty } from "lodash";
+import { GetListParams } from "react-admin";
 
 /**
  * @param resource
@@ -23,3 +21,36 @@ export const fetcher = async (
     init
   ).then((res) => res.json());
 };
+
+export function getListParamsToQuery(params: GetListParams): string {
+  const { sort, filter, pagination } = params;
+
+  let query = `stats[total]=count`;
+
+  if (!isEmpty(sort)) {
+    const sortParam = `sort=${sort.order === "ASC" ? "" : "-"}${sort.field}`;
+    query = [query, sortParam].join("&");
+  }
+
+  if (!isEmpty(filter)) {
+    const filterParams = filter.entries.map(
+      ([key, value]) => `filter[${key}]=${value}`
+    );
+    query = [query, ...filterParams].join("&");
+  }
+
+  if (!isEmpty(pagination)) {
+    const pageParams = [
+      `page[size]=${pagination.perPage}`,
+      `page[number]=${pagination.page}`,
+    ];
+    query = [query, ...pageParams].join("&");
+  }
+
+  return query;
+}
+
+export const parseRecord = ({ id, attributes }) => ({
+  id: +id,
+  ...attributes,
+});

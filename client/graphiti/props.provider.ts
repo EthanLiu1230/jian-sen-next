@@ -1,5 +1,5 @@
 import { Link, LinkGroup } from "../../components/Header/props.type";
-import { configUrl, fetcher } from "./utils";
+import { fetcher } from "./utils";
 
 export const getLinkGroups = async (): Promise<LinkGroup[]> => {
   const response = await fetcher(
@@ -15,7 +15,7 @@ export const getLinkGroups = async (): Promise<LinkGroup[]> => {
     query: { scene, category },
   });
 
-  const linkGroups: LinkGroup[] = data.map(
+  return data.map(
     (mainCat): LinkGroup => {
       const linkGroup: LinkGroup = {
         id: +mainCat.id,
@@ -43,6 +43,4 @@ export const getLinkGroups = async (): Promise<LinkGroup[]> => {
       return linkGroup;
     }
   );
-
-  return linkGroups;
 };
