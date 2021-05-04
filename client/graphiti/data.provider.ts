@@ -101,14 +101,19 @@ const dataProvider: DataProvider = {
     );
     return { data: records };
   },
-  getManyReference<RecordType>(
+  async getManyReference<RecordType>(
     resource: string,
     params: GetManyReferenceParams
   ): Promise<GetManyReferenceResult<RecordType>> {
-    // return Promise.resolve(undefined);
     const { target, id, ...getListParams } = params;
     let query = getListParamsToQuery(getListParams);
     query = [query, `filter[${target}]=${id}`].join("&");
+
+    const response = await fetcher(resource, `?${query}`, { method: "GET" });
+    return {
+      total: response.meta.stats.total.count,
+      data: response.data.map(parseRecord),
+    };
   },
 
   async getOne<RecordType>(
