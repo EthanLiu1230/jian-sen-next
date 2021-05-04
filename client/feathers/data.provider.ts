@@ -57,13 +57,12 @@ const dataProvider: DataProvider = {
     const $sort = {};
     $sort[field] = order === "ASC" ? 1 : -1;
 
-    // filter in RA corresponds to Equality in Feathers' Querying
+    // filter
+    // Filter in React-Admin corresponds to Equality in Feathers' Querying
     const query: Query = {
       $limit,
       $skip,
-
       $sort,
-
       ...filter,
     };
     return await app.service(resource).find({ query });

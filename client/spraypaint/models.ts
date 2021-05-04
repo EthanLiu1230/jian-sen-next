@@ -2,7 +2,7 @@ import { SpraypaintBase, Model, Attr, HasMany, BelongsTo } from "spraypaint";
 
 @Model()
 export class ApplicationRecord extends SpraypaintBase {
-  static baseUrl = "http://localhost:3030";
+  static baseUrl = "http://localhost:3000";
   static apiNamespace = "/api/v1";
 }
 
@@ -17,3 +17,9 @@ export class Category extends ApplicationRecord {
   @HasMany() children: Category[];
   @BelongsTo() parent: Category;
 }
+
+const models = {
+  categories: Category,
+};
+
+export default models;
