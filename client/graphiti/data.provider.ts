@@ -173,4 +173,5 @@ const dataProvider: DataProvider = {
     return { data: record };
   },
 };
+
 export default dataProvider;
