@@ -2,22 +2,17 @@ import { isEmpty } from "lodash";
 import { GetListParams } from "react-admin";
 
 /**
- * @param resource
  * 'categories'
- * @param query
  * '?stats[total]=count'
  * @param init
  * {method: 'GET'}
+ * @param endpoint
  */
-export const fetcher = async (
-  resource: string,
-  query: string,
-  init: RequestInit
-) => {
+export const fetcher = async (endpoint: String, init: RequestInit) => {
   const baseUrl = "http://localhost:3000";
   const apiNamespace = "/api/v1";
   return await fetch(
-    `${baseUrl}${apiNamespace}/${resource}${query}`,
+    `${baseUrl}${apiNamespace}/${endpoint}`,
     init
   ).then((res) => res.json());
 };

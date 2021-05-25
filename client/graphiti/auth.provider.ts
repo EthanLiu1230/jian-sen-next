@@ -18,23 +18,24 @@ const authProvider: AuthProvider = {
     return Promise.resolve(undefined);
   },
 
-  async login(params: { email: string; password: string }): Promise<any> {
-    const response = await fetcher("sessions", "", {
+  login({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<any> {
+    return fetcher(`users/sign_in`, {
       method: "POST",
-      headers: (() => {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        return headers;
-      })(),
-      body: JSON.stringify({
-        user: {
-          email: params.email,
-          password: params.password,
-        },
-      }),
+      headers: new Headers({ "Content-Type": "application/json" }),
+      body: JSON.stringify({ email, password }),
+    }).then((res) => {
+      console.log("res -> ", res);
     });
   },
+
   logout(params: any): Promise<void | false | string> {
     return Promise.resolve(undefined);
   },
 };
+export default authProvider;

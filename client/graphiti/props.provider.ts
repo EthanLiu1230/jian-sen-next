@@ -3,8 +3,7 @@ import { fetcher } from "./utils";
 
 export const getLinkGroups = async (): Promise<LinkGroup[]> => {
   const response = await fetcher(
-    "categories",
-    "?filter[parent_id]=null&include=children",
+    `categories?filter[parent_id]=null&include=children`,
     { method: "GET" }
   );
 

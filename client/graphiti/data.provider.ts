@@ -27,19 +27,15 @@ const dataProvider: DataProvider = {
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
     const { data } = params;
-    const response = await fetcher(resource, "", {
+    const response = await fetcher(`${resource}`, {
       method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
       body: JSON.stringify({
         data: {
           type: resource,
           attributes: data,
         },
       }),
-      headers: (() => {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        return headers;
-      })(),
     });
     return { data: parseRecord(response) };
   },
@@ -49,9 +45,9 @@ const dataProvider: DataProvider = {
     params: DeleteParams
   ): Promise<DeleteResult<RecordType>> {
     const { id } = params;
-    const record = await fetcher(resource, `/${id}`, { method: "DELETE" }).then(
-      parseRecord
-    );
+    const record = await fetcher(`${resource}/${id}`, {
+      method: "DELETE",
+    }).then(parseRecord);
     return { data: record };
   },
 
@@ -62,7 +58,7 @@ const dataProvider: DataProvider = {
     const { ids } = params;
     const records = await Promise.all(
       ids.map((id) =>
-        fetcher(resource, `/${id}`, { method: "DELETE" }).then(parseRecord)
+        fetcher(`${resource}/${id}`, { method: "DELETE" }).then(parseRecord)
       )
     );
     return { data: records };
@@ -75,8 +71,9 @@ const dataProvider: DataProvider = {
     const { data, id } = params;
 
     const { created_at, updated_at, ...attributes } = data;
-    const response = await fetcher(resource, `/${id}`, {
+    const response = await fetcher(`${resource}/${id}`, {
       method: "PATCH",
+      headers: new Headers({ "Content-Type": "application/json" }),
       body: JSON.stringify({
         data: {
           id,
@@ -84,11 +81,6 @@ const dataProvider: DataProvider = {
           attributes,
         },
       }),
-      headers: (() => {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        return headers;
-      })(),
     });
     return { data: parseRecord(response) };
   },
@@ -100,13 +92,9 @@ const dataProvider: DataProvider = {
     const { data, ids } = params;
     const records = await Promise.all(
       ids.map((id) =>
-        fetcher(resource, `/${id}`, {
+        fetcher(`${resource}/${id}`, {
           method: "PATCH",
-          headers: (() => {
-            const headers = new Headers();
-            headers.append("Content-Type", "application/json");
-            return headers;
-          })(),
+          headers: new Headers({ "Content-Type": "application/json" }),
           body: JSON.stringify({
             data: {
               id,
@@ -125,9 +113,7 @@ const dataProvider: DataProvider = {
     params: GetListParams
   ): Promise<GetListResult<RecordType>> {
     const query = getListParamsToQuery(params);
-
-    const response = await fetcher(resource, `?${query}`, { method: "GET" });
-
+    const response = await fetcher(`${resource}?${query}`, { method: "GET" });
     return {
       total: response.meta.stats.total.count,
       data: response.data.map(parseRecord),
@@ -141,7 +127,7 @@ const dataProvider: DataProvider = {
     const { ids } = params;
     const records = await Promise.all(
       ids.map((id) =>
-        fetcher(resource, `/${id}`, { method: "GET" }).then(parseRecord)
+        fetcher(`${resource}/${id}`, { method: "GET" }).then(parseRecord)
       )
     );
     return { data: records };
@@ -154,8 +140,7 @@ const dataProvider: DataProvider = {
     const { target, id, ...getListParams } = params;
     let query = getListParamsToQuery(getListParams);
     query = [query, `filter[${target}]=${id}`].join("&");
-
-    const response = await fetcher(resource, `?${query}`, { method: "GET" });
+    const response = await fetcher(`${resource}?${query}`, { method: "GET" });
     return {
       total: response.meta.stats.total.count,
       data: response.data.map(parseRecord),
@@ -167,7 +152,7 @@ const dataProvider: DataProvider = {
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
     const { id } = params;
-    const record = await fetcher(resource, `/${id}`, { method: "GET" }).then(
+    const record = await fetcher(`${resource}/${id}`, { method: "GET" }).then(
       parseRecord
     );
     return { data: record };
