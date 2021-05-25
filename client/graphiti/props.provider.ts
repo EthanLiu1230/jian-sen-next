@@ -5,7 +5,7 @@ export const getLinkGroups = async (): Promise<LinkGroup[]> => {
   const response = await fetcher(
     `categories?filter[parent_id]=null&include=children`,
     { method: "GET" }
-  );
+  ).then((res) => res.json());
 
   const { data, included } = response;
 

@@ -18,8 +18,17 @@ import {
   UpdateManyResult,
   UpdateParams,
   UpdateResult,
-} from "react-admin";
-import { fetcher, getListParamsToQuery, parseRecord } from "./utils";
+} from 'react-admin';
+import { fetcher, getListParamsToQuery, parseRecord } from './utils';
+
+function setHeaders() {
+  let headers = new Headers({ 'Content-Type': 'application/json' });
+  const accessToken = localStorage.getItem('Access-Token');
+  if (accessToken) {
+    headers.append('Authorization', `Bearer ${accessToken}`);
+  }
+  return headers;
+}
 
 export default {
   async create<RecordType>(
@@ -27,17 +36,17 @@ export default {
     params: CreateParams
   ): Promise<CreateResult<RecordType>> {
     const { data } = params;
-    const response = await fetcher(`${resource}`, {
-      method: "POST",
-      headers: new Headers({ "Content-Type": "application/json" }),
+    const responseBody = await fetcher(`${resource}`, {
+      method: 'POST',
+      headers: setHeaders(),
       body: JSON.stringify({
         data: {
           type: resource,
           attributes: data,
         },
       }),
-    });
-    return { data: parseRecord(response) };
+    }).then((r) => r.json());
+    return { data: parseRecord(responseBody) };
   },
 
   async delete<RecordType>(
@@ -46,8 +55,11 @@ export default {
   ): Promise<DeleteResult<RecordType>> {
     const { id } = params;
     const record = await fetcher(`${resource}/${id}`, {
-      method: "DELETE",
-    }).then(parseRecord);
+      method: 'DELETE',
+      headers: setHeaders(),
+    })
+      .then((r) => r.json())
+      .then(parseRecord);
     return { data: record };
   },
 
@@ -58,7 +70,12 @@ export default {
     const { ids } = params;
     const records = await Promise.all(
       ids.map((id) =>
-        fetcher(`${resource}/${id}`, { method: "DELETE" }).then(parseRecord)
+        fetcher(`${resource}/${id}`, {
+          method: 'DELETE',
+          headers: setHeaders(),
+        })
+          .then((r) => r.json())
+          .then(parseRecord)
       )
     );
     return { data: records };
@@ -72,8 +89,8 @@ export default {
 
     const { created_at, updated_at, ...attributes } = data;
     const response = await fetcher(`${resource}/${id}`, {
-      method: "PATCH",
-      headers: new Headers({ "Content-Type": "application/json" }),
+      method: 'PATCH',
+      headers: setHeaders(),
       body: JSON.stringify({
         data: {
           id,
@@ -81,7 +98,7 @@ export default {
           attributes,
         },
       }),
-    });
+    }).then((r) => r.json());
     return { data: parseRecord(response) };
   },
 
@@ -93,8 +110,8 @@ export default {
     const records = await Promise.all(
       ids.map((id) =>
         fetcher(`${resource}/${id}`, {
-          method: "PATCH",
-          headers: new Headers({ "Content-Type": "application/json" }),
+          method: 'PATCH',
+          headers: setHeaders(),
           body: JSON.stringify({
             data: {
               id,
@@ -102,7 +119,9 @@ export default {
               attributes: data,
             },
           }),
-        }).then(parseRecord)
+        })
+          .then((r) => r.json())
+          .then(parseRecord)
       )
     );
     return { data: records };
@@ -113,10 +132,13 @@ export default {
     params: GetListParams
   ): Promise<GetListResult<RecordType>> {
     const query = getListParamsToQuery(params);
-    const response = await fetcher(`${resource}?${query}`, { method: "GET" });
+    const responseBody = await fetcher(`${resource}?${query}`, {
+      method: 'GET',
+      headers: setHeaders(),
+    }).then((r) => r.json());
     return {
-      total: response.meta.stats.total.count,
-      data: response.data.map(parseRecord),
+      total: responseBody.meta.stats.total.count,
+      data: responseBody.data.map(parseRecord),
     };
   },
 
@@ -127,7 +149,9 @@ export default {
     const { ids } = params;
     const records = await Promise.all(
       ids.map((id) =>
-        fetcher(`${resource}/${id}`, { method: "GET" }).then(parseRecord)
+        fetcher(`${resource}/${id}`, { method: 'GET', headers: setHeaders() })
+          .then((r) => r.json())
+          .then(parseRecord)
       )
     );
     return { data: records };
@@ -139,8 +163,11 @@ export default {
   ): Promise<GetManyReferenceResult<RecordType>> {
     const { target, id, ...getListParams } = params;
     let query = getListParamsToQuery(getListParams);
-    query = [query, `filter[${target}]=${id}`].join("&");
-    const response = await fetcher(`${resource}?${query}`, { method: "GET" });
+    query = [query, `filter[${target}]=${id}`].join('&');
+    const response = await fetcher(`${resource}?${query}`, {
+      method: 'GET',
+      headers: setHeaders(),
+    }).then((r) => r.json());
     return {
       total: response.meta.stats.total.count,
       data: response.data.map(parseRecord),
@@ -152,9 +179,12 @@ export default {
     params: GetOneParams
   ): Promise<GetOneResult<RecordType>> {
     const { id } = params;
-    const record = await fetcher(`${resource}/${id}`, { method: "GET" }).then(
-      parseRecord
-    );
+    const record = await fetcher(`${resource}/${id}`, {
+      method: 'GET',
+      headers: setHeaders(),
+    })
+      .then((r) => r.json())
+      .then(parseRecord);
     return { data: record };
   },
 };

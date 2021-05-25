@@ -1,5 +1,5 @@
-import { isEmpty } from "lodash";
-import { GetListParams } from "react-admin";
+import { isEmpty } from 'lodash';
+import { GetListParams } from 'react-admin';
 
 /**
  * 'categories'
@@ -9,12 +9,9 @@ import { GetListParams } from "react-admin";
  * @param endpoint
  */
 export const fetcher = async (endpoint: String, init: RequestInit) => {
-  const baseUrl = "http://localhost:3000";
-  const apiNamespace = "/api/v1";
-  return await fetch(
-    `${baseUrl}${apiNamespace}/${endpoint}`,
-    init
-  ).then((res) => res.json());
+  const baseUrl = 'http://localhost:3000';
+  const apiNamespace = '/api/v1';
+  return await fetch(`${baseUrl}${apiNamespace}/${endpoint}`, init);
 };
 
 export function getListParamsToQuery(params: GetListParams): string {
@@ -23,15 +20,15 @@ export function getListParamsToQuery(params: GetListParams): string {
   let query = `stats[total]=count`;
 
   if (!isEmpty(sort)) {
-    const sortParam = `sort=${sort.order === "ASC" ? "" : "-"}${sort.field}`;
-    query = [query, sortParam].join("&");
+    const sortParam = `sort=${sort.order === 'ASC' ? '' : '-'}${sort.field}`;
+    query = [query, sortParam].join('&');
   }
 
   if (!isEmpty(filter)) {
     const filterParams = filter.entries.map(
       ([key, value]) => `filter[${key}]=${value}`
     );
-    query = [query, ...filterParams].join("&");
+    query = [query, ...filterParams].join('&');
   }
 
   if (!isEmpty(pagination)) {
@@ -39,7 +36,7 @@ export function getListParamsToQuery(params: GetListParams): string {
       `page[size]=${pagination.perPage}`,
       `page[number]=${pagination.page}`,
     ];
-    query = [query, ...pageParams].join("&");
+    query = [query, ...pageParams].join('&');
   }
 
   return query;
