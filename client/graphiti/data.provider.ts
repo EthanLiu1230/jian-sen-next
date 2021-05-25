@@ -21,7 +21,7 @@ import {
 } from "react-admin";
 import { fetcher, getListParamsToQuery, parseRecord } from "./utils";
 
-const dataProvider: DataProvider = {
+export default {
   async create<RecordType>(
     resource: string,
     params: CreateParams
@@ -158,5 +158,3 @@ const dataProvider: DataProvider = {
     return { data: record };
   },
 };
-
-export default dataProvider;

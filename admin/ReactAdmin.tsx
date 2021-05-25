@@ -12,11 +12,7 @@ import authProvider from "../client/graphiti/auth.provider";
 import category from "./category";
 
 const ReactAdmin = () => (
-  <Admin
-    dataProvider={dataProvider}
-    authProvider={authProvider}
-    loginPage={Login}
-  >
+  <Admin authProvider={authProvider} dataProvider={dataProvider}>
     <Resource name={"categories"} {...category} />
   </Admin>
 );

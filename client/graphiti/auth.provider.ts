@@ -1,41 +1,32 @@
 import { AuthProvider, UserIdentity } from "react-admin";
 import { fetcher } from "./utils";
 
-const authProvider: AuthProvider = {
-  checkAuth(params: any): Promise<void> {
-    return Promise.resolve(undefined);
+export default {
+  // called when the user attempts to log in
+  login: ({ username }) => {
+    localStorage.setItem("username", username);
+    // accept all username/password combinations
+    return Promise.resolve();
   },
-
-  checkError(error: any): Promise<void> {
-    return Promise.resolve(undefined);
+  // called when the user clicks on the logout button
+  logout: () => {
+    localStorage.removeItem("username");
+    return Promise.resolve();
   },
-
-  getIdentity(): Promise<UserIdentity> {
-    return Promise.resolve(undefined);
+  // called when the API returns an error
+  checkError: ({ status }) => {
+    if (status === 401 || status === 403) {
+      localStorage.removeItem("username");
+      return Promise.reject();
+    }
+    return Promise.resolve();
   },
-
-  getPermissions(params: any): Promise<any> {
-    return Promise.resolve(undefined);
+  // called when the user navigates to a new location, to check for authentication
+  checkAuth: () => {
+    return localStorage.getItem("username")
+      ? Promise.resolve()
+      : Promise.reject();
   },
-
-  login({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<any> {
-    return fetcher(`users/sign_in`, {
-      method: "POST",
-      headers: new Headers({ "Content-Type": "application/json" }),
-      body: JSON.stringify({ email, password }),
-    }).then((res) => {
-      console.log("res -> ", res);
-    });
-  },
-
-  logout(params: any): Promise<void | false | string> {
-    return Promise.resolve(undefined);
-  },
+  // called when the user navigates to a new location, to check for permissions / roles
+  getPermissions: () => Promise.resolve(),
 };
-export default authProvider;
