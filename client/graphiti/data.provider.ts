@@ -21,7 +21,7 @@ import {
 } from 'react-admin';
 import { fetcher, getListParamsToQuery, parseRecord } from './utils';
 
-function setHeaders() {
+export function setHeaders() {
   let headers = new Headers({ 'Content-Type': 'application/json' });
   const accessToken = localStorage.getItem('Access-Token');
   if (accessToken) {

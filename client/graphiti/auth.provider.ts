@@ -1,4 +1,4 @@
-import { AuthProvider, UserIdentity } from 'react-admin';
+import { setHeaders } from './data.provider';
 import { fetcher } from './utils';
 
 export default {
@@ -20,14 +20,24 @@ export default {
     });
     if (res.status === 200) {
       localStorage.setItem('Access-Token', res.headers.get('Access-Token'));
+      return Promise.resolve();
     }
+    return Promise.reject();
   },
+
   // called when the user clicks on the logout button
-  logout: () => {
-    // todo: fetcher sign_out
-    localStorage.removeItem('Access-Token');
-    return Promise.resolve();
+  logout: async () => {
+    const res = await fetcher(`users/sign_out`, {
+      method: 'DELETE',
+      headers: setHeaders(),
+    });
+    if (res.status === 200) {
+      localStorage.removeItem('Access-Token');
+      return Promise.resolve();
+    }
+    return Promise.reject();
   },
+
   // called when the API returns an error
   checkError: ({ status }) => {
     if (status === 401 || status === 403) {
@@ -36,12 +46,14 @@ export default {
     }
     return Promise.resolve();
   },
+
   // called when the user navigates to a new location, to check for authentication
   checkAuth: () => {
     return localStorage.getItem('Access-Token')
       ? Promise.resolve()
       : Promise.reject();
   },
+
   // called when the user navigates to a new location, to check for permissions / roles
   getPermissions: () => Promise.resolve(),
 };
